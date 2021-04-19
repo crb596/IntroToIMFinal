@@ -19,8 +19,6 @@ Timer timer;
 boolean started = false; //to keep track of whetehr game has been started or not
 int distMeterMin = 5;
 int distMeterMax = 35;
->>>>>>> Stashed changes
-
 String[] colNames = {"blue", "green", "yellow", "red"};
 
 //loading images
