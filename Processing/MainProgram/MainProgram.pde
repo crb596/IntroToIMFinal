@@ -14,11 +14,9 @@ int distDiv = 14; //for the distance meter --> max point is 14 so need to divide
 float distReading = 0; //takes reading from distance meter
 int potDiv = 4; //number of parts we want to divide the potentiometer in
 float potReading = 0; //takes reading from potentiometer
-<<<<<<< Updated upstream
 
 Timer timer;
 boolean started = false; //to keep track of whetehr game has been started or not
-=======
 int distMeterMin = 5;
 int distMeterMax = 35;
 >>>>>>> Stashed changes
@@ -92,12 +90,7 @@ void setup() {
 //=====================================================================================================
 
 void draw() {
-<<<<<<< Updated upstream
-  
   startGame();
-  
-=======
-
   gameSetup();
 
   //test:
