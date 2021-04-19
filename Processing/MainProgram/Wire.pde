@@ -1,3 +1,5 @@
+//test hi
+
 class Wire 
 {
   //members
