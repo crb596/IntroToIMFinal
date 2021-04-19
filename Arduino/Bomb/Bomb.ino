@@ -43,6 +43,8 @@ void setup() {
   pinMode(redButtonPin, INPUT);
   pinMode(greenButtonPin, INPUT);
   pinMode(yellowButtonPin, INPUT);
+  pinMode(pingPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 }
 
 void loop() {
@@ -53,7 +55,24 @@ void loop() {
     red = Serial.parseInt();
     blue = Serial.parseInt();
     alarm = Serial.parseInt();
-    
+
+    long duration;
+    int cm;
+    digitalWrite(pingPin, LOW); //Send a ping out with sensor
+    delayMicroseconds(2);
+    digitalWrite(pingPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(pingPin, LOW); //Ping sent
+    duration = pulseIn(echoPin, HIGH);  //Wait for return on echo Pin
+    cm = duration / 29 / 2; //Convert to cm
+
+    if (cm > 35) {
+      cm = 35;
+    }
+    else if (cm < 5) {
+      cm = 5;
+    }
+
     if (Serial.read() == '\n') {
       //Turn lights on from read in values
       digitalWrite(yellowLedPin, yellow);
@@ -64,66 +83,58 @@ void loop() {
       //Read in potentiometer value and the distance meter value, convert to centimeters
       int meter = analogRead(A0);
       delay(1);
-      long duration;
-      int cm;
-      digitalWrite(pingPin, LOW); //Send a ping out with sensor
-      delayMicroseconds(2);
-      digitalWrite(pingPin, HIGH);
-      delayMicroseconds(10);
-      digitalWrite(pingPin, LOW); //Ping sent
-      duration = pulseIn(echoPin, HIGH);  //Wait for return on echo Pin
-      cm = duration / 29 / 2; //Convert to cm
 
-      
-      //Write to processsing in following form "potentiometer,distanceincm,yellowbuttonpressed,yellowbutton,greenbuttonpressed,greenbutton,redbuttonpressed,redbutton,bluebuttonpressed,bluebutton"
+
+
+      //Write to processsing in following form "potentiometer,distanceincm(0-35),yellowbuttonpressed,yellowbutton,greenbuttonpressed,greenbutton,redbuttonpressed,redbutton,bluebuttonpressed,bluebutton"
       //Button pressed meaning if that button was just pressed and the value is now changing write 1
-      Serial.print(sensor);
+      Serial.print(meter);
       Serial.print(',');
       Serial.print(cm);
       Serial.print(',');
-      int yellowButtonRead = digitalRead(yellowButtonPin)
-      if(yellowButtonRead == 1 && yellowButton == 0){
+      int yellowButtonRead = digitalRead(yellowButtonPin);
+      if (yellowButtonRead == 1 && yellowButton == 0) {
         Serial.print(1);
       }
-      else{
+      else {
         Serial.print(0);
       }
       yellowButton = yellowButtonRead;
       Serial.print(',');
-      Serial.print(digitalRead(yellowButtonRead));
+      Serial.print(yellowButtonRead);
       Serial.print(',');
-      int greenButtonRead = digitalRead(greenButtonPin)
-      if(greenButtonRead == 1 && greenButton == 0){
+      int greenButtonRead = digitalRead(greenButtonPin);
+      if (greenButtonRead == 1 && greenButton == 0) {
         Serial.print(1);
       }
-      else{
+      else {
         Serial.print(0);
       }
       greenButton = greenButtonRead;
       Serial.print(',');
-      Serial.print(digitalRead(greenButtonRead));
+      Serial.print(greenButtonRead);
       Serial.print(',');
-      int redButtonRead = digitalRead(redButtonPin)
-      if(redButtonRead == 1 && redButton == 0){
+      int redButtonRead = digitalRead(redButtonPin);
+      if (redButtonRead == 1 && redButton == 0) {
         Serial.print(1);
       }
-      else{
+      else {
         Serial.print(0);
       }
       redButton = redButtonRead;
       Serial.print(',');
-      Serial.print(digitalRead(redButtonRead));
+      Serial.print(redButtonRead);
       Serial.print(',');
-      int blueButtonRead = digitalRead(blueButtonPin)
-      if(blueButtonRead == 1 && blueButton == 0){
+      int blueButtonRead = digitalRead(blueButtonPin);
+      if (blueButtonRead == 1 && blueButton == 0) {
         Serial.print(1);
       }
-      else{
+      else {
         Serial.print(0);
       }
       blueButton = blueButtonRead;
       Serial.print(',');
-      Serial.println(digitalRead(blueButtonRead));
+      Serial.println(blueButtonRead);
     }
   }
 }
