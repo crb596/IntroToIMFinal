@@ -108,7 +108,7 @@ void potMeter()
   float range = map(mouseX, 0, width, 0, -PI);
   translate(width/25*2+distMeterW*4, height/15+distMeterH);
   rotate(range);
-  println(range);
+  //println(range);
   image(needleImg, 0, -10, distMeterW*2.5, distMeterW*2.5*18/200);
   //rotate(0);
   //translate(0,0); 
