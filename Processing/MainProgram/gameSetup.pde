@@ -1,3 +1,25 @@
+void startGame()
+{
+  //for the timer
+  if (!started)
+  {
+    timer = new Timer(millis()); //initialize the object when game is started
+    timer.display();
+    started = true;
+  }
+
+  gameSetup(); //needs to be called when game is started
+
+  //update and display timer periodically
+  timer.update();
+  timer.display();
+
+  distMeter();
+  potMeter();
+}
+
+//=====================================================================================================
+
 void gameSetup()
 {
   //loading backgroung image
@@ -54,25 +76,8 @@ void gameSetup()
   noFill();
   arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, PI, 2*PI, CHORD);
   //image(needleImg, width/25*2+distMeterW*4, height/15+distMeterH-15, distMeterW*2.5, distMeterW*2.5*18/200);
-  
+
   popStyle();
-  
-  fill(255);
-  //rect(width/2,height/2,100,100);
-  
-  //pushMatrix();
-  ////translate(width/25*2+distMeterW*4, height/15+distMeterH-15);
-  //float range = map(mouseX, 0, width, 0, PI);
-  ////rotate(PI/2);
-  //println(range);
-  //image(needleImg, width/25*2+distMeterW*4, height/15+distMeterH-15, distMeterW*2.5, distMeterW*2.5*18/200);
-  //translate(width/2,height/2);
-  //rotate(PI/3);
-  //fill(255);
-  //rect(0,0,100,100);
-  //popMatrix();
- 
-  
 }
 
 //=====================================================================================================
@@ -104,7 +109,7 @@ void potMeter()
   translate(width/25*2+distMeterW*4, height/15+distMeterH);
   rotate(range);
   println(range);
-  image(needleImg, 0,-10, distMeterW*2.5, distMeterW*2.5*18/200);
+  image(needleImg, 0, -10, distMeterW*2.5, distMeterW*2.5*18/200);
   //rotate(0);
   //translate(0,0); 
   popMatrix();

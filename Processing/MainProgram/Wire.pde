@@ -1,4 +1,5 @@
-class Wire {
+class Wire 
+{
   //members
   String colType; //color of the wire
   color col; //assign color based on colType - can be removed if not used - basically to sync arduino colors

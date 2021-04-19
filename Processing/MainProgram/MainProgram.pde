@@ -15,6 +15,8 @@ float distReading = 0; //takes reading from distance meter
 int potDiv = 4; //number of parts we want to divide the potentiometer in
 float potReading = 0; //takes reading from potentiometer
 
+Timer timer;
+boolean started = false; //to keep track of whetehr game has been started or not
 
 String[] colNames = {"blue", "green", "yellow", "red"};
 
@@ -67,15 +69,9 @@ void setup() {
 //=====================================================================================================
 
 void draw() {
-
-  gameSetup();
-
-  //test:
-  //delay(2000);
-  //wires[2].state = false;
-
-  distMeter();
-  potMeter();
+  
+  startGame();
+  
 }
 
 //=====================================================================================================
