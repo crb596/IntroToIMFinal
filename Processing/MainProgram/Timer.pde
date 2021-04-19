@@ -50,7 +50,8 @@ class Timer
     else seconds = ("" + sec);
   }
 
-  void reduce()
+  void reduce(int time)
   {
+    timeLeft-=time; //reduce the time when a wrong input is given
   }
 }
