@@ -84,7 +84,7 @@ void gameSetup()
 
 void distMeter()
 {
-  float range = map(distReading, distMeterMin, distMeterMax, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
+  float range = map(distance, distMeterMax, distMeterMin, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
   //float range = map(mouseX, 0, width, 0, distMeterH-distMeterH/distDiv); //for now
   //show the reading go up and down in distance meter on screen
   pushStyle();
@@ -105,7 +105,7 @@ void distMeter()
 void potMeter()
 {
   pushMatrix();
-  float range = map(mouseX, 0, width, 0, -PI);
+  float range = map(potentiometer, 0, 1023, 0, -PI);
   translate(width/25*2+distMeterW*4, height/15+distMeterH);
   rotate(range);
   //println(range);
