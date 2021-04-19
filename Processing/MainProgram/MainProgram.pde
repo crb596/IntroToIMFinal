@@ -14,9 +14,14 @@ int distDiv = 14; //for the distance meter --> max point is 14 so need to divide
 float distReading = 0; //takes reading from distance meter
 int potDiv = 4; //number of parts we want to divide the potentiometer in
 float potReading = 0; //takes reading from potentiometer
+<<<<<<< Updated upstream
 
 Timer timer;
 boolean started = false; //to keep track of whetehr game has been started or not
+=======
+int distMeterMin = 5;
+int distMeterMax = 35;
+>>>>>>> Stashed changes
 
 String[] colNames = {"blue", "green", "yellow", "red"};
 
@@ -25,6 +30,24 @@ PImage[] wireImg; //wire setup on screen
 PImage bgImg; //for the background
 PImage arcImg;
 PImage needleImg;
+
+//Arduino sensor values and light booleans
+boolean yellowLight = false;  //SHould the light be on or off
+int yellowButtonPressed = 0;  //Was the button just pressed
+int yellowButtonDown = 0;  //What is the current state of the button (down or up)
+boolean greenLight = false;  //SHould the light be on or off
+int greenButtonPressed = 0;  //Was the button just pressed
+int greenButtonDown = 0;  //What is the current state of the button (down or up)
+boolean redLight = true;  //SHould the light be on or off
+int redButtonPressed = 0;  //Was the button just pressed
+int redButtonDown = 0;  //What is the current state of the button (down or up)
+boolean blueLight = true;  //SHould the light be on or off
+int blueButtonPressed = 0;  //Was the button just pressed
+int blueButtonDown = 0;  //What is the current state of the button (down or up)
+boolean bombExploded = false;
+int distance = 0; //(Value inputted is 0-35cm)
+int potentiometer = 0;
+
 
 Wire[] wires;
 
@@ -69,12 +92,69 @@ void setup() {
 //=====================================================================================================
 
 void draw() {
+<<<<<<< Updated upstream
   
   startGame();
   
+=======
+
+  gameSetup();
+
+  //test:
+  //delay(2000);
+  //wires[2].state = false;
+
+  distMeter();
+  potMeter();
+  
+  //test arduino
+  if(yellowButtonDown == 1){
+    yellowLight = true;
+  }
+  else{
+    yellowLight = false;
+  }
+  if(blueButtonDown == 1){
+    blueLight = true;
+  }
+  else{
+    blueLight = false;
+  }
+  if(redButtonDown == 1){
+    redLight = true;
+  }
+  else{
+    redLight = false;
+  }
+  if(greenButtonDown == 1){
+    greenLight = true;
+  }
+  else{
+    greenLight = false;
+  }
 }
 
 //=====================================================================================================
 
 void serialEvent(Serial myPort) {
+  String s=myPort.readStringUntil('\n');
+  s=trim(s);
+  println("S:" + s);
+  if (s!=null){
+    int values[]=int(split(s,','));
+    //println(values);
+    if (values.length==10){
+      potentiometer=(int)values[0];
+      distance=(int)values[1];
+      yellowButtonPressed=(int)values[2];
+      yellowButtonDown=(int)values[3];
+      greenButtonPressed=(int)values[4];
+      greenButtonDown=(int)values[5];
+      redButtonPressed=(int)values[6];
+      redButtonDown=(int)values[7];
+      blueButtonPressed=(int)values[8];
+      blueButtonDown=(int)values[9];
+    }
+  }
+  myPort.write(int(yellowLight)+","+int(greenLight)+","+int(redLight)+","+int(blueLight)+","+int(bombExploded)+"\n");
 }
