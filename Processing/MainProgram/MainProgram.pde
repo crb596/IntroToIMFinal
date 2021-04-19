@@ -89,14 +89,6 @@ void setup() {
 
 void draw() {
   startGame();
-  gameSetup();
-
-  //test:
-  //delay(2000);
-  //wires[2].state = false;
-
-  distMeter();
-  potMeter();
   
   //test arduino
   if(yellowButtonDown == 1){
