@@ -17,7 +17,7 @@ float potReading = 0; //takes reading from potentiometer
 
 Timer timer;
 boolean started = false; //to keep track of whetehr game has been started or not
-int distMeterMin = 5;
+int distMeterMin = 10;
 int distMeterMax = 35;
 String[] colNames = {"blue", "green", "yellow", "red"};
 
