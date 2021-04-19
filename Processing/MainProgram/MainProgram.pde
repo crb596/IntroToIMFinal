@@ -11,9 +11,7 @@ int wireCount = 0; //to count how many wires have been cut
 float distMeterH;
 float distMeterW;
 int distDiv = 14; //for the distance meter --> max point is 14 so need to divide into 14 parts
-float distReading = 0; //takes reading from distance meter
 int potDiv = 4; //number of parts we want to divide the potentiometer in
-float potReading = 0; //takes reading from potentiometer
 
 Timer timer;
 boolean started = false; //to keep track of whetehr game has been started or not
