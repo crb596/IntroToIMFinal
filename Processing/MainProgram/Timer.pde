@@ -21,11 +21,15 @@ class Timer
   void display()
   {
     convert(timeLeft);
-    textSize(40);
+    pushStyle();
+    textFont(font);
+    textSize(75);
+    textAlign(CENTER);
     //text(timeLeft, width/4, height/5);
     //text(int((timeLeft/1000)/60) + " : " + (timeLeft/1000)%60, width/4, height/10);
-    text(minutes + ":" + seconds, width/4, height/10);
+    text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.2);
     textSize(12);
+    popStyle();
   }
 
   void update() //to update the current time constantly
@@ -38,12 +42,12 @@ class Timer
   {
     min = time/1000/60;
     if (min>=0 && min <=9)
-      minutes = ("0" + min + " ");
-    else minutes = (min + " ");
+      minutes = ("0" + min + "");
+    else minutes = (min + "");
     sec = (time/1000)%60;
     if (sec>=0 && sec <=9)
-      seconds = (" 0" + sec);
-    else seconds = (" " + sec);
+      seconds = ("0" + sec);
+    else seconds = ("" + sec);
   }
 
   void reduce()
