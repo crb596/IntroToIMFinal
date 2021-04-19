@@ -4,6 +4,8 @@ Serial myPort;
 
 //PROCESSING STUFF
 
+PFont font;
+
 //declaring global Variables
 float wireSetupH;
 float wireSetupW;
@@ -49,6 +51,7 @@ Wire[] wires;
 
 void setup() {
   size(1350, 800);
+  font = loadFont("Monaco.vlw");
 
   //connecting to ARDUINO  
   String portname=Serial.list()[1];
