@@ -13,7 +13,7 @@ class Timer
   {
     startTime = stime;
     passedTime = 0;
-    timerLength = 1000*60*2+1000;
+    timerLength = 1000*60*3+1000;
     timeLeft = timerLength/1000;
   }
 
@@ -22,12 +22,20 @@ class Timer
   {
     convert(timeLeft);
     pushStyle();
+    //for the box
+    rectMode(CENTER);
+    fill(0,0,0);
+    strokeWeight(3);
+    stroke(155,0,0);
+    rect(width/25*2+distMeterW*4, height*0.15, distMeterW*4, distMeterW*1.5);
+    //for the time
     textFont(font);
     textSize(75);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
+    fill(250,0,0);
     //text(timeLeft, width/4, height/5);
     //text(int((timeLeft/1000)/60) + " : " + (timeLeft/1000)%60, width/4, height/10);
-    text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.2);
+    text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.15);
     textSize(12);
     popStyle();
   }
