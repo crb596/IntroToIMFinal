@@ -16,6 +16,9 @@ void startGame()
 
   distMeter();
   potMeter();
+
+  //if (timer.timeLeft<=0)
+  //  endGame();
 }
 
 //=====================================================================================================
@@ -84,7 +87,7 @@ void gameSetup()
 
 void distMeter()
 {
-  float range = map(distance, distMeterMax, distMeterMin, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
+  float range = map(distance, distMeterMin, distMeterMax, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
   //float range = map(mouseX, 0, width, 0, distMeterH-distMeterH/distDiv); //for now
   //show the reading go up and down in distance meter on screen
   pushStyle();
