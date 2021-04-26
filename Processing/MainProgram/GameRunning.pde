@@ -79,21 +79,25 @@ class GameStage {
       if (potentiometer >= 512 && potentiometer < 777) {
         //In yellow
         gameStage++;
+        stageTwoSetup = false;
       }
     } else if (numberOfLights == 2) {
       if (potentiometer >= 0 && potentiometer < 256) {
         //In red
         gameStage++;
+        stageTwoSetup = false;
       }
     } else if (numberOfLights == 3) {
       if (potentiometer >= 256 && potentiometer < 512) {
         //In orange
         gameStage++;
+        stageTwoSetup = false;
       }
     } else if (numberOfLights == 4) {
       if (potentiometer >= 777 && potentiometer < 1024) {
         //In green
         gameStage++;
+        stageTwoSetup = false;
       }
     }
     return gameStage;
@@ -188,6 +192,7 @@ class GameStage {
         //Wrong order
         else {
           fail = true;
+          stageThreeSetup = false;
         }
       }
       //Green button pressed
@@ -200,6 +205,7 @@ class GameStage {
         //Wrong order
         else {
           fail = true;
+          stageThreeSetup = false;
         }
       }
       //Red button pressed
@@ -212,6 +218,7 @@ class GameStage {
         //Wrong order
         else {
           fail = true;
+          stageThreeSetup = false;
         }
       }
       //Blue button pressed
@@ -224,12 +231,14 @@ class GameStage {
         //Wrong order
         else {
           fail = true;
+          stageThreeSetup = false;
         }
       }
 
       //Completed
       if (orderIndex == 4) {
         gameStage++;
+        stageThreeSetup = false;
       }
     }
     return gameStage;
