@@ -93,9 +93,9 @@ void loop() {
         if (millis()>timer){
           onOff = !onOff;
           digitalWrite(redLedPin, onOff);
-        digitalWrite(yellowLedPin, LOW);
-        digitalWrite(greenLedPin, LOW);
-        digitalWrite(blueLedPin, LOW);
+          digitalWrite(yellowLedPin, LOW);
+          digitalWrite(greenLedPin, LOW);
+          digitalWrite(blueLedPin, LOW);
           timer = millis() + timerLength;
         }
         tone(buzzerPin, 622, 1000);  //Play buxxer
