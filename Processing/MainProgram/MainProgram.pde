@@ -151,7 +151,9 @@ void mousePressed()
       submitButton = true; //submit button was clicked, so make it true
       //check for game stage
       if (!(gameStage.gameStage == 2 || (gameStage.gameStage == 1 && PButton[1] == true)))
+      {
         timer.reduce(10000); //reduce 10 secs
+      }
     }
   }
 }
