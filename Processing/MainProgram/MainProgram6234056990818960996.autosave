@@ -27,7 +27,7 @@ PImage bgImg; //for the background
 PImage arcImg;
 PImage needleImg;
 
-boolean PButton[] = {false, false}; //for the 2 buttons - green and blue on Processing interface --> 0 = green, 1 = blue
+boolean[] PButton; //for the 2 buttons - green and blue on Processing interface
 
 //Arduino sensor values and light booleans
 //boolean yellowLight = false;  //SHould the light be on or off
@@ -61,10 +61,9 @@ boolean submitButton = false;
 void setup() {
   size(1350, 800);
   font = loadFont("Monaco.vlw");
-  //println(Serial.list());
+
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1];
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -92,10 +91,10 @@ void setup() {
 
   //initializing class objects
   wires = new Wire[4];
-  for (int i=0; i<wires.length; i++) {
+  for (int i=0; i<wires.length; i++){
     wires[i] = new Wire(colNames[i]);
   }
-
+  
   gameStage = new GameStage();
 }
 
@@ -103,14 +102,15 @@ void setup() {
 
 void draw() {
   startGame();
-  if (!fail && !pass) {
+  if(!fail && !pass){
     gameStage.runGame();
   }
-  if (fail) {
+  if(fail){
     bombExploded = true;
   }
-
+  
   //wires[1].state=false;
+ 
 }
 
 //=====================================================================================================
@@ -119,10 +119,10 @@ void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
   s=trim(s);
   //println("S:" + s);
-  if (s!=null) {
-    int values[]=int(split(s, ','));
+  if (s!=null){
+    int values[]=int(split(s,','));
     //println(values);
-    if (values.length==10) {
+    if (values.length==10){
       potentiometer=(int)values[0];
       distance=(int)values[1];
       buttonPressed[0]=(int)values[2];  //Yellow button
@@ -136,22 +136,4 @@ void serialEvent(Serial myPort) {
     }
   }
   myPort.write(int(lights[0])+","+int(lights[1])+","+int(lights[2])+","+int(lights[3])+","+int(bombExploded)+"\n");
-}
-
-
-//=====================================================================================================
-
-void mousePressed()
-{
-  if (started) //i.e. game has been started
-  {
-    if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
-      && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
-    {
-      submitButton = true; //submit button was clicked, so make it true
-      //check for game stage
-      if (!(gameStage.gameStage == 2 || (gameStage.gameStage == 1 && PButton[1] == true)))
-        timer.reduce(10000); //reduce 10 secs
-    }
-  }
 }

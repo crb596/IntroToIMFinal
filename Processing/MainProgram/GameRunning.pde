@@ -25,7 +25,6 @@ class GameStage {
   boolean buttonUsed = false; //Used to determine if a button is being pressed
 
 
-
   //Default constructor
   GameStage() {
     gameStage = 2;
@@ -38,6 +37,14 @@ class GameStage {
     if (gameStage == 3) {
       return stageThree();
     }
+    
+    //If submit button value != -1, decrease the time
+    if(submitButton){
+      //decrement timer
+      //TO DO
+      submitButton = false;
+    }
+    
     return -1;
   }
 
@@ -83,22 +90,25 @@ class GameStage {
         stageTwoSetup = false;
       }
     } else if (numberOfLights == 2) {
-      if (potentiometer >= 0 && potentiometer < 256) {
+      if (potentiometer >= 0 && potentiometer < 256 && submitButton == true) {
         //In red
         gameStage++;
         stageTwoSetup = false;
+        submitButton = false;
       }
     } else if (numberOfLights == 3) {
-      if (potentiometer >= 256 && potentiometer < 512) {
+      if (potentiometer >= 256 && potentiometer < 512 && submitButton == true) {
         //In orange
         gameStage++;
         stageTwoSetup = false;
+        submitButton = false;
       }
     } else if (numberOfLights == 4) {
-      if (potentiometer >= 777 && potentiometer < 1024) {
+      if (potentiometer >= 777 && potentiometer < 1024 && submitButton == true) {
         //In green
         gameStage++;
         stageTwoSetup = false;
+        submitButton = false;
       }
     }
     return gameStage;
@@ -129,14 +139,7 @@ class GameStage {
     //}
     //println();
     
-    //If submit button value != -1, decrease the time
-    if(submitButton){
-      //decrement timer
-      //TO DO
-      submitButton = false;
-    }
     
-
     //Flash lights in order//If timer if 0 - 199ms
     if (millis() - timerStart < 400) {
       lights[order[0]] = true;
@@ -250,6 +253,7 @@ class GameStage {
         stageThreeSetup = false;
       }
     }
+    
     return gameStage;
   }
 }
