@@ -123,10 +123,10 @@ class GameStage {
       stageThreeSetup = true;
     }
 
-    for (int i = 0; i < 4; i++) {
-      print(buttonPressed[i] + ", " );
-    }
-    println();
+    //for (int i = 0; i < 4; i++) {
+    //  print(buttonPressed[i] + ", " );
+    //}
+    //println();
 
     //Flash lights in order//If timer if 0 - 199ms
     if (millis() - timerStart < 400) {
