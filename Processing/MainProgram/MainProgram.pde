@@ -27,25 +27,35 @@ PImage bgImg; //for the background
 PImage arcImg;
 PImage needleImg;
 
+
 //Arduino sensor values and light booleans
-boolean yellowLight = false;  //SHould the light be on or off
-int yellowButtonPressed = 0;  //Was the button just pressed
-int yellowButtonDown = 0;  //What is the current state of the button (down or up)
-boolean greenLight = false;  //SHould the light be on or off
-int greenButtonPressed = 0;  //Was the button just pressed
-int greenButtonDown = 0;  //What is the current state of the button (down or up)
-boolean redLight = true;  //SHould the light be on or off
-int redButtonPressed = 0;  //Was the button just pressed
-int redButtonDown = 0;  //What is the current state of the button (down or up)
-boolean blueLight = true;  //SHould the light be on or off
-int blueButtonPressed = 0;  //Was the button just pressed
-int blueButtonDown = 0;  //What is the current state of the button (down or up)
+//boolean yellowLight = false;  //SHould the light be on or off
+//int yellowButtonPressed = 0;  //Was the button just pressed
+//int yellowButtonDown = 0;  //What is the current state of the button (down or up)
+////boolean greenLight = false;  //SHould the light be on or off
+//int greenButtonPressed = 0;  //Was the button just pressed
+//int greenButtonDown = 0;  //What is the current state of the button (down or up)
+////boolean redLight = true;  //SHould the light be on or off
+//int redButtonPressed = 0;  //Was the button just pressed
+//int redButtonDown = 0;  //What is the current state of the button (down or up)
+////boolean blueLight = true;  //SHould the light be on or off
+//int blueButtonPressed = 0;  //Was the button just pressed
+//int blueButtonDown = 0;  //What is the current state of the button (down or up)
 boolean bombExploded = false;
 int distance = 0; //(Value inputted is 0-35cm)
 int potentiometer = 0;
+boolean lights[] = {false, false, false, false};  //yellow light, green light, red light, blue light
+int buttonDown[] = {0, 0, 0, 0}; //yellow button down, green button down, red button down, blue button down
+int buttonPressed[] = {0, 0, 0, 0}; //yellow button pressed, green button pressed, red button pressed, blue button pressed
+
 
 
 Wire[] wires;
+
+GameStage gameStage; //used to control flow of game
+boolean pass = false;  //Won game
+boolean fail = false;  //Failed game
+boolean submitButton = false;
 
 //=====================================================================================================
 
@@ -82,40 +92,25 @@ void setup() {
 
   //initializing class objects
   wires = new Wire[4];
-  for (int i=0; i<wires.length; i++)
+  for (int i=0; i<wires.length; i++){
     wires[i] = new Wire(colNames[i]);
+  }
+  
+  gameStage = new GameStage();
 }
 
 //=====================================================================================================
 
 void draw() {
   startGame();
+  if(!fail && !pass){
+    gameStage.runGame();
+  }
+  if(fail){
+    bombExploded = true;
+  }
   
-  //test arduino
-  if(yellowButtonDown == 1){
-    yellowLight = true;
-  }
-  else{
-    yellowLight = false;
-  }
-  if(blueButtonDown == 1){
-    blueLight = true;
-  }
-  else{
-    blueLight = false;
-  }
-  if(redButtonDown == 1){
-    redLight = true;
-  }
-  else{
-    redLight = false;
-  }
-  if(greenButtonDown == 1){
-    greenLight = true;
-  }
-  else{
-    greenLight = false;
-  }
+  
 }
 
 //=====================================================================================================
@@ -123,22 +118,22 @@ void draw() {
 void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
   s=trim(s);
-  println("S:" + s);
+  //println("S:" + s);
   if (s!=null){
     int values[]=int(split(s,','));
     //println(values);
     if (values.length==10){
       potentiometer=(int)values[0];
       distance=(int)values[1];
-      yellowButtonPressed=(int)values[2];
-      yellowButtonDown=(int)values[3];
-      greenButtonPressed=(int)values[4];
-      greenButtonDown=(int)values[5];
-      redButtonPressed=(int)values[6];
-      redButtonDown=(int)values[7];
-      blueButtonPressed=(int)values[8];
-      blueButtonDown=(int)values[9];
+      buttonPressed[0]=(int)values[2];  //Yellow button
+      buttonDown[0]=(int)values[3];
+      buttonPressed[1]=(int)values[4];  //Green button
+      buttonDown[1]=(int)values[5];
+      buttonPressed[2]=(int)values[6];  //Red button
+      buttonDown[2]=(int)values[7];
+      buttonPressed[3]=(int)values[8];  //Blue button
+      buttonDown[3]=(int)values[9];
     }
   }
-  myPort.write(int(yellowLight)+","+int(greenLight)+","+int(redLight)+","+int(blueLight)+","+int(bombExploded)+"\n");
+  myPort.write(int(lights[0])+","+int(lights[1])+","+int(lights[2])+","+int(lights[3])+","+int(bombExploded)+"\n");
 }

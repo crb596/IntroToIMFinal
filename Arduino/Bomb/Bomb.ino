@@ -31,6 +31,11 @@ int redButton = 0;
 int greenButton = 0;
 int yellowButton = 0;
 
+//Timer for flashing when bomb goes off
+long timer = 0;
+int timerLength = 500;
+bool onOff = false;
+
 void setup() {
   //Setup serial communication
   Serial.begin(9600);
@@ -74,11 +79,27 @@ void loop() {
     }
 
     if (Serial.read() == '\n') {
-      //Turn lights on from read in values
-      digitalWrite(yellowLedPin, yellow);
-      digitalWrite(greenLedPin, green);
-      digitalWrite(redLedPin, red);
-      digitalWrite(blueLedPin, blue);
+      //If the bomb has not gone off
+      if(!alarm){
+        //Turn lights on from read in values
+        digitalWrite(yellowLedPin, yellow);
+        digitalWrite(greenLedPin, green);
+        digitalWrite(redLedPin, red);
+        digitalWrite(blueLedPin, blue);
+      }
+      //If bomb has gone off
+      else{
+        //Flash red light and set buzzer off  
+        if (millis()>timer){
+          onOff = !onOff;
+          digitalWrite(redLedPin, onOff);
+          digitalWrite(yellowLedPin, LOW);
+          digitalWrite(greenLedPin, LOW);
+          digitalWrite(blueLedPin, LOW);
+          timer = millis() + timerLength;
+        }
+        tone(buzzerPin, 622, 1000);  //Play buxxer
+      }
 
       //Read in potentiometer value and the distance meter value, convert to centimeters
       int meter = analogRead(A0);
