@@ -27,6 +27,7 @@ PImage bgImg; //for the background
 PImage arcImg;
 PImage needleImg;
 
+
 //Arduino sensor values and light booleans
 //boolean yellowLight = false;  //SHould the light be on or off
 //int yellowButtonPressed = 0;  //Was the button just pressed
@@ -54,6 +55,7 @@ Wire[] wires;
 GameStage gameStage; //used to control flow of game
 boolean pass = false;  //Won game
 boolean fail = false;  //Failed game
+boolean submitButton = false;
 
 //=====================================================================================================
 

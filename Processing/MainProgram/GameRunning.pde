@@ -76,9 +76,10 @@ class GameStage {
 
     //Check for a user input
     if (numberOfLights == 1) {
-      if (potentiometer >= 512 && potentiometer < 777) {
+      if (potentiometer >= 512 && potentiometer < 777 && submitButton == true) {
         //In yellow
         gameStage++;
+        submitButton = false;
         stageTwoSetup = false;
       }
     } else if (numberOfLights == 2) {
@@ -127,6 +128,14 @@ class GameStage {
     //  print(buttonPressed[i] + ", " );
     //}
     //println();
+    
+    //If submit button value != -1, decrease the time
+    if(submitButton){
+      //decrement timer
+      //TO DO
+      submitButton = false;
+    }
+    
 
     //Flash lights in order//If timer if 0 - 199ms
     if (millis() - timerStart < 400) {
