@@ -149,10 +149,11 @@ void mousePressed()
       && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
     {
       submitButton = true; //submit button was clicked, so make it true
-      //check for game stage
+      ///check for game stage
       if (!(gameStage.gameStage == 2 || (gameStage.gameStage == 1 && PButton[1] == true)))
       {
         timer.reduce(10000); //reduce 10 secs
+        submitButton = false;
       }
     }
   }

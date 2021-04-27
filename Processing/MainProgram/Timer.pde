@@ -46,7 +46,7 @@ class Timer
   {
     passedTime = millis()-startTime;
     timeLeft = timerLength-passedTime-penalty;
-    if (millis()>reduceTimeSound+100)
+    if (millis()>reduceTimeSound+10)
       bombExploded = false;
   }
 

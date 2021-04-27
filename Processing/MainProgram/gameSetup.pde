@@ -55,7 +55,7 @@ void gameSetup()
   stroke(150); //i.e. game has been started
   if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
     && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
-    fill(50, 150, 10, 80);
+    fill(150, 0, 0, 95);
   else
     fill(150, 0, 0, 80);
   rectMode(CENTER);
@@ -94,15 +94,26 @@ void gameSetup()
   strokeWeight(3);
   stroke(180);
   //fill(0,168,107,75); //actual wire color
-  fill(115, 250, 37);
-  rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
-  fill(0, 0, 0, 99);
-  rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   //fill(16,52,166,75); //actual wire color
-  fill(10, 242, 238);
-  rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
-  fill(0, 0, 120);
-  rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  if (PButton[0] == true)
+  {
+    fill(115, 250, 37);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    //fill(0, 0, 0, 99);
+    //rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    fill(0,0,0);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  } else if (PButton[1] == true)
+  {
+    fill(10, 242, 238);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    fill(0, 0, 0);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  } else {
+    fill(0, 0, 0);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  }
   popStyle();
 }
 
