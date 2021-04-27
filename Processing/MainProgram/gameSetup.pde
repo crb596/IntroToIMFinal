@@ -49,11 +49,15 @@ void gameSetup()
     fill(0);
     text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i); //not able to use distDiv here... WHY??
   }
-  
+
   //submit button
   strokeWeight(2);
-  stroke(150);
-  fill(150, 0, 0, 80);
+  stroke(150); //i.e. game has been started
+  if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
+    && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
+    fill(50, 150, 10, 80);
+  else
+    fill(150, 0, 0, 80);
   rectMode(CENTER);
   rect(width/25*2+distMeterW*4, height-(height-distMeterH)/2, distMeterW*4, height*0.1, 10);
   textAlign(CENTER, CENTER);
@@ -83,7 +87,7 @@ void gameSetup()
   arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, PI, 2*PI, CHORD);
   //image(needleImg, width/25*2+distMeterW*4, height/15+distMeterH-15, distMeterW*2.5, distMeterW*2.5*18/200);
   popStyle();
-  
+
   //green and blue signal buttons
   pushStyle();
   rectMode(CENTER);
@@ -92,12 +96,12 @@ void gameSetup()
   //fill(0,168,107,75); //actual wire color
   fill(115, 250, 37);
   rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
-  fill(0,0,0,99);
+  fill(0, 0, 0, 99);
   rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   //fill(16,52,166,75); //actual wire color
- fill(10, 242, 238);
- rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
- fill(0,0,120);
+  fill(10, 242, 238);
+  rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  fill(0, 0, 120);
   rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   popStyle();
 }

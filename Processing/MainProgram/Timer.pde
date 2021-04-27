@@ -4,6 +4,7 @@ class Timer
   int startTime; //milisec
   int timerLength; //milisec
   int timeLeft; //milisec
+  int penalty; //reduce time by penalty in milisec
   String minutes;
   int min;
   String seconds;
@@ -13,7 +14,7 @@ class Timer
   {
     startTime = stime;
     passedTime = 0;
-    timerLength = 1000*60*3+1000;
+    timerLength = 1000*60*5+1000;
     timeLeft = timerLength/1000;
   }
 
@@ -43,7 +44,7 @@ class Timer
   void update() //to update the current time constantly
   {
     passedTime = millis()-startTime;
-    timeLeft = timerLength-passedTime;
+    timeLeft = timerLength-passedTime-penalty;
   }
 
   void convert(int time)
@@ -60,6 +61,6 @@ class Timer
 
   void reduce(int time)
   {
-    timeLeft-=time; //reduce the time when a wrong input is given
+    penalty+=time; //reduce the time when a wrong input is given
   }
 }
