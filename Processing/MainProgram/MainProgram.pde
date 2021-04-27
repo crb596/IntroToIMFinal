@@ -27,6 +27,7 @@ PImage bgImg; //for the background
 PImage arcImg;
 PImage needleImg;
 
+boolean[] PButton; //for the 2 buttons - green and blue on Processing interface
 
 //Arduino sensor values and light booleans
 //boolean yellowLight = false;  //SHould the light be on or off
@@ -42,13 +43,11 @@ PImage needleImg;
 //int blueButtonPressed = 0;  //Was the button just pressed
 //int blueButtonDown = 0;  //What is the current state of the button (down or up)
 boolean bombExploded = false;
-int distance = 0; //(Value inputted is 0-35cm)
+int distance = distMeterMin; //(Value inputted is 0-35cm)
 int potentiometer = 0;
 boolean lights[] = {false, false, false, false};  //yellow light, green light, red light, blue light
 int buttonDown[] = {0, 0, 0, 0}; //yellow button down, green button down, red button down, blue button down
 int buttonPressed[] = {0, 0, 0, 0}; //yellow button pressed, green button pressed, red button pressed, blue button pressed
-
-
 
 Wire[] wires;
 
@@ -109,6 +108,8 @@ void draw() {
   if(fail){
     bombExploded = true;
   }
+  
+  //wires[1].state=false;
   
   
 }
