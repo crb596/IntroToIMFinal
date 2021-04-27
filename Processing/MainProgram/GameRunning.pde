@@ -90,83 +90,113 @@ class GameStage {
         }
       }
     }
-    
-  //now check if blue or green light is on
-  if (PButton[0] == true) //i.e. green light is on
-  {
-    //Look for user input
-    //Look to see if no buttons are being pressed
-    if (buttonUsed) {
-      boolean tempNotUsed = true;
-      for (int i = 0; i< 4; i++) {
-        if (buttonDown[i] == 1) {
-          tempNotUsed = false;
-        }
-      }
-      if (tempNotUsed) {
-        buttonUsed = false;
-      }
-    }
-    if (!buttonUsed) 
+
+    //now check if blue or green light is on
+    if (PButton[0] == true) //i.e. green light is on
     {
-      //Yellow button pressed
-      if (buttonDown[0] == 1) 
-      {
-        buttonUsed = true;
-        //Check to see if the button input is correct according to no. of leds
-        if (countLights == 3) { 
-          gameStage++;
+      //Look for user input
+      //Look to see if no buttons are being pressed
+      if (buttonUsed) {
+        boolean tempNotUsed = true;
+        for (int i = 0; i< 4; i++) {
+          if (buttonDown[i] == 1) {
+            tempNotUsed = false;
+          }
         }
-        //Wrong button pressed according to the number
-        else {
-          fail = true;
-          stageOneSetup = false;
-        }
-      }
-      //Green button pressed
-      if (buttonDown[1] == 1) 
-      {
-        buttonUsed = true;
-        //Check to see if the button input is correct according to no. of leds
-        if (countLights == 2) { 
-          gameStage++;
-        }
-        //Wrong button pressed according to the number
-        else {
-          fail = true;
-          stageOneSetup = false;
+        if (tempNotUsed) {
+          buttonUsed = false;
         }
       }
-      //Red button pressed
-      if (buttonDown[0] == 1) 
+      
+      if (!buttonUsed) 
       {
-        buttonUsed = true;
-        //Check to see if the button input is correct according to no. of leds
-        if (countLights == 4) { 
-          gameStage++;
+        //Yellow button pressed
+        if (buttonDown[0] == 1) 
+        {
+          buttonUsed = true; //where do i make this false?
+          //Check to see if the button input is correct according to no. of leds
+          if (countLights == 3) { //correct input
+            PButton[0] = false;
+            if (buttonCol == 0)
+              PButton[1]=true; //so if green was the first color, make blue glow next
+            else
+              gameStage++; //if green was the second color, go to next stage
+          }
+          //Wrong button pressed according to the number
+          else {
+            fail = true;
+            stageOneSetup = false;
+            PButton[0] = false;
+            PButton[1] = false;
+          }
         }
-        //Wrong button pressed according to the number
-        else {
-          fail = true;
-          stageOneSetup = false;
+        //Green button pressed
+        if (buttonDown[1] == 1) 
+        {
+          buttonUsed = true;
+          //Check to see if the button input is correct according to no. of leds
+          if (countLights == 2) { 
+            PButton[0] = false;
+            if (buttonCol == 0)
+              PButton[1]=true; 
+            else
+              gameStage++;
+          }
+          //Wrong button pressed according to the number
+          else {
+            fail = true;
+            stageOneSetup = false;
+            PButton[0] = false;
+            PButton[1] = false;
+          }
         }
-      }
-      //Blue button pressed
-      if (buttonDown[3] == 1) 
-      {
-        buttonUsed = true;
-        //Check to see if the button input is correct according to no. of leds
-        if (countLights == 1) { 
-          gameStage++;
+        //Red button pressed
+        if (buttonDown[0] == 1) 
+        {
+          buttonUsed = true;
+          //Check to see if the button input is correct according to no. of leds
+          if (countLights == 4) { 
+            PButton[0] = false;
+            if (buttonCol == 0)
+              PButton[1]=true; 
+            else
+              gameStage++;
+          }
+          //Wrong button pressed according to the number
+          else {
+            fail = true;
+            stageOneSetup = false;
+            PButton[0] = false;
+            PButton[1] = false;
+          }
         }
-        //Wrong button pressed according to the number
-        else {
-          fail = true;
-          stageOneSetup = false;
+        //Blue button pressed
+        if (buttonDown[3] == 1) 
+        {
+          buttonUsed = true;
+          //Check to see if the button input is correct according to no. of leds
+          if (countLights == 1) 
+          { 
+            PButton[0] = false;
+            if (buttonCol == 0)
+              PButton[1]=true; 
+            else
+              gameStage++;
+          }
+          //Wrong button pressed according to the number
+          else {
+            fail = true;
+            stageOneSetup = false;
+            PButton[0] = false;
+            PButton[1] = false;
+          }
         }
       }
     }
-  }
+
+    if (PButton[1] == true) //i.e. the blue button is on
+    {
+    }
 
     return gameStage;
   }
