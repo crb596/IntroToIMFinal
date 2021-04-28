@@ -4,16 +4,18 @@ class Timer
   int startTime; //milisec
   int timerLength; //milisec
   int timeLeft; //milisec
+  int penalty; //reduce time by penalty in milisec
   String minutes;
   int min;
   String seconds;
   int sec;
+  int reduceTimeSound;
 
   Timer(int stime)
   {
     startTime = stime;
     passedTime = 0;
-    timerLength = 1000*60*3+1000;
+    timerLength = 1000*60*5+1000;
     timeLeft = timerLength/1000;
   }
 
@@ -24,15 +26,15 @@ class Timer
     pushStyle();
     //for the box
     rectMode(CENTER);
-    fill(0,0,0);
+    fill(0, 0, 0);
     strokeWeight(3);
-    stroke(155,0,0);
+    stroke(155, 0, 0);
     rect(width/25*2+distMeterW*4, height*0.15, distMeterW*4, distMeterW*1.5);
     //for the time
     textFont(font);
     textSize(75);
     textAlign(CENTER, CENTER);
-    fill(250,0,0);
+    fill(250, 0, 0);
     //text(timeLeft, width/4, height/5);
     //text(int((timeLeft/1000)/60) + " : " + (timeLeft/1000)%60, width/4, height/10);
     text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.15);
@@ -43,7 +45,9 @@ class Timer
   void update() //to update the current time constantly
   {
     passedTime = millis()-startTime;
-    timeLeft = timerLength-passedTime;
+    timeLeft = timerLength-passedTime-penalty;
+    if (millis()>reduceTimeSound+10)
+      bombExploded = false;
   }
 
   void convert(int time)
@@ -60,6 +64,8 @@ class Timer
 
   void reduce(int time)
   {
-    timeLeft-=time; //reduce the time when a wrong input is given
+    penalty+=time; //reduce the time when a wrong input is given
+    reduceTimeSound = millis(); //record the time when bomb went off
+    bombExploded = true; //to make arduino buzzer sound for 1 sec
   }
 }

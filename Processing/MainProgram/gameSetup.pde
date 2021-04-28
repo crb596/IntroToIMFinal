@@ -42,21 +42,28 @@ void gameSetup()
   strokeWeight(5);
   stroke(150);
   fill(180);
-  rect(width/25, height/15, distMeterW, distMeterH, 50);
+  rect(width/25, height/2-distMeterH/2, distMeterW, distMeterH, 50);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
     fill(0);
-    text("-- "+ (distDiv-i+1) + " --", width/25, height/15+distMeterH/(distDiv+1)*i); //not able to use distDiv here... WHY??
+    text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i); //not able to use distDiv here... WHY??
   }
+
   //submit button
   strokeWeight(2);
-  stroke(150);
-  fill(150, 0, 0, 80);
-  rect(width/25, height/15+distMeterH+height/30, distMeterW, height*0.05, 10);
-  textAlign(CENTER);
+  stroke(150); //i.e. game has been started
+  if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
+    && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
+    fill(150, 0, 0, 95);
+  else
+    fill(150, 0, 0, 80);
+  rectMode(CENTER);
+  rect(width/25*2+distMeterW*4, height-(height-distMeterH)/2, distMeterW*4, height*0.1, 10);
+  textAlign(CENTER, CENTER);
   fill(150);
-  text("SUBMIT", width/25+distMeterW/2, height/15+distMeterH+height/15);
+  textSize(42);
+  text("SUBMIT", width/25*2+distMeterW*4, height-(height-distMeterH)/2);
   popStyle();
 
   //for the potentiometer (speedometer)
@@ -67,19 +74,46 @@ void gameSetup()
   //OR
   noStroke();
   fill(128, 255, 128);
-  arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, PI, 5*PI/4);
+  arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, PI, 5*PI/4);
   fill(255, 255, 102);
-  arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, 5*PI/4, 6*PI/4);
+  arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, 5*PI/4, 6*PI/4);
   fill(255, 166, 77);
-  arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, 6*PI/4, 7*PI/4);
+  arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, 6*PI/4, 7*PI/4);
   fill(255, 77, 77);
-  arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, 7*PI/4, 8*PI/4);
+  arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, 7*PI/4, 8*PI/4);
   strokeWeight(5);
   stroke(180);
   noFill();
-  arc(width/25*2+distMeterW*4, height/15+distMeterH, distMeterW*5, distMeterW*5, PI, 2*PI, CHORD);
+  arc(width/25*2+distMeterW*4, distMeterH, distMeterW*5, distMeterW*5, PI, 2*PI, CHORD);
   //image(needleImg, width/25*2+distMeterW*4, height/15+distMeterH-15, distMeterW*2.5, distMeterW*2.5*18/200);
+  popStyle();
 
+  //green and blue signal buttons
+  pushStyle();
+  rectMode(CENTER);
+  strokeWeight(3);
+  stroke(180);
+  //fill(0,168,107,75); //actual wire color
+  //fill(16,52,166,75); //actual wire color
+  if (PButton[0] == true)
+  {
+    fill(115, 250, 37);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    //fill(0, 0, 0, 99);
+    //rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    fill(0,0,0);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  } else if (PButton[1] == true)
+  {
+    fill(10, 242, 238);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    fill(0, 0, 0);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  } else {
+    fill(0, 0, 0);
+    rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+  }
   popStyle();
 }
 
@@ -93,12 +127,12 @@ void distMeter()
   pushStyle();
   fill(150, 0, 0, 80);
   noStroke();
-  rect(width/25, height/15+distMeterH-distMeterH/distDiv/2, distMeterW, -1*range, 20);
+  rect(width/25, height/2+distMeterH/2-distMeterH/distDiv/2, distMeterW, -1*range, 20);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
     fill(0);
-    text("-- "+ (distDiv-i+1) + " --", width/25, height/15+distMeterH/(distDiv+1)*i);
+    text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i);
   }
   popStyle();
 }
@@ -109,7 +143,7 @@ void potMeter()
 {
   pushMatrix();
   float range = map(potentiometer, 0, 1023, 0, -PI);
-  translate(width/25*2+distMeterW*4, height/15+distMeterH);
+  translate(width/25*2+distMeterW*4, distMeterH);
   rotate(range);
   //println(range);
   image(needleImg, 0, -10, distMeterW*2.5, distMeterW*2.5*18/200);
