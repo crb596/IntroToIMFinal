@@ -31,11 +31,11 @@ boolean PButton[] = {false, false}; //for the 2 buttons - green and blue on Proc
 
 //Arduino sensor values and light booleans
 boolean bombExploded = false;
+boolean bombDefused = false;
 int distance = distMeterMin; //(Value inputted is 0-35cm)
 int potentiometer = 0;
 boolean lights[] = {false, false, false, false};  //yellow light, green light, red light, blue light
 int buttonDown[] = {0, 0, 0, 0}; //yellow button down, green button down, red button down, blue button down
-int buttonPressed[] = {0, 0, 0, 0}; //yellow button pressed, green button pressed, red button pressed, blue button pressed
 
 Wire[] wires;
 
@@ -140,24 +140,20 @@ void draw() {
 void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
   s=trim(s);
-  //println("S:" + s);
+  println("S:" + s);
   if (s!=null) {
     int values[]=int(split(s, ','));
     //println(values);
-    if (values.length==10) {
+    if (values.length==6) {
       potentiometer=(int)values[0];
       distance=(int)values[1];
-      buttonPressed[0]=(int)values[2];  //Yellow button
-      buttonDown[0]=(int)values[3];
-      buttonPressed[1]=(int)values[4];  //Green button
-      buttonDown[1]=(int)values[5];
-      buttonPressed[2]=(int)values[6];  //Red button
-      buttonDown[2]=(int)values[7];
-      buttonPressed[3]=(int)values[8];  //Blue button
-      buttonDown[3]=(int)values[9];
+      buttonDown[0]=(int)values[2];//Yellow button
+      buttonDown[1]=(int)values[3];//Green button
+      buttonDown[2]=(int)values[4];//Red button
+      buttonDown[3]=(int)values[5];//Blue button
     }
   }
-  myPort.write(int(lights[0])+","+int(lights[1])+","+int(lights[2])+","+int(lights[3])+","+int(bombExploded)+"\n");
+  myPort.write(int(lights[0])+","+int(lights[1])+","+int(lights[2])+","+int(lights[3])+","+int(bombExploded)+","+int(bombDefused)+"\n");
 }
 
 
