@@ -201,6 +201,24 @@ class GameStage {
 
     if (PButton[1] == true) //i.e. the blue button is on
     {
+      float distReading = (distMeterMax-distMeterMin)/distDiv;
+      if (submitButton)
+      {
+        if (distance >= distMeterMax-sum*distReading && distance <= distMeterMax-(sum-1)*distReading) //i.e. correct distance
+        { 
+          PButton[1] = false;
+          if (buttonCol == 1) //if this was the first light
+            PButton[0]=true; //turn on the next light
+          else
+            gameStage++; //else move to the next stage
+        } else //submit button pressed at wrong time --> fail
+        {
+          fail = true;
+          stageOneSetup = false;
+          PButton[0] = false;
+          PButton[1] = false;
+        }
+      }
     }
 
     return gameStage;
