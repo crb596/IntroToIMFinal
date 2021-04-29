@@ -2,8 +2,6 @@ class GameStage {
 
   //Manage flow of game
   int gameStage; //Which instruction set is the player on?
-  boolean pass; //Has the user passed the stage?
-  boolean failed; //Has the bomb been set off
 
   //Timers used for flashing
   long timerStart;
@@ -376,11 +374,11 @@ class GameStage {
       stageThreeSetup = true;
     }
 
-    for (int i = 0; i < 4; i++) {
-      print(order[i] + ", " );
-    }
-    println();
-    println(orderIndex);
+    //for (int i = 0; i < 4; i++) {
+    //  print(order[i] + ", " );
+    //}
+    //println();
+    //println(orderIndex);
 
 
     //Flash lights in order//If timer if 0 - 199ms
@@ -506,7 +504,6 @@ class GameStage {
 
   //Choose one of the remaining wires and show that LED
   int stageFour() {
-    println("fail: ", fail);
     if (!stageFourSetup) {
       //Choose which wire to cut out of the ones left
       randomIndex = int(random(4));//Chose a random number 0-3
@@ -628,7 +625,7 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
-            //Do nothing
+            //Do nothing, runs stage 4 again with last wire
           }
           else if(correctRounds == 4){
             pass = true;

@@ -130,7 +130,6 @@ void draw()
     break;
   }
 
-
   //if (pass)
   //{
   //  screenMode = 6;
@@ -139,12 +138,10 @@ void draw()
   //wires[1].state=false;
 }
 
-//=====================================================================================================
-
 void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
   s=trim(s);
-  println("S:" + s);
+  //println("S:" + s);
   if (s!=null) {
     int values[]=int(split(s, ','));
     //println(values);
