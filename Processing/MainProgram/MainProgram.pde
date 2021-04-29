@@ -115,15 +115,15 @@ void draw() {
     //  break; 
   case 5 : 
     gameScreen(); //instruction screen for bomb diffusion
+    gameStage.runGame();
     break; 
   case 6 : 
     endScreen(); //instruction screen for bomb diffusion
     break;
   }
 
-  if (!fail && !pass) {
-    gameStage.runGame();
-  }
+  //if (!fail && !pass) {
+  //}
   if (fail || pass) {
     screenMode = 6;
   }
@@ -140,7 +140,7 @@ void draw() {
 void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
   s=trim(s);
-  println("S:" + s);
+  //println("S:" + s);
   if (s!=null) {
     int values[]=int(split(s, ','));
     //println(values);
