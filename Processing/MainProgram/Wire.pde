@@ -15,7 +15,7 @@ class Wire
     else if (colType == "green")
       col = color(0, 250, 0);
     else if (colType == "yellow")
-      col = color(150, 150, 150);
+      col = color(250, 250, 0);
     else if (colType == "red")
       col = color(250, 0, 0);
       state = true; //by default, all wores aree uncut
