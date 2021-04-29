@@ -30,18 +30,6 @@ PImage needleImg;
 boolean PButton[] = {false, false}; //for the 2 buttons - green and blue on Processing interface --> 0 = green, 1 = blue
 
 //Arduino sensor values and light booleans
-//boolean yellowLight = false;  //SHould the light be on or off
-//int yellowButtonPressed = 0;  //Was the button just pressed
-//int yellowButtonDown = 0;  //What is the current state of the button (down or up)
-////boolean greenLight = false;  //SHould the light be on or off
-//int greenButtonPressed = 0;  //Was the button just pressed
-//int greenButtonDown = 0;  //What is the current state of the button (down or up)
-////boolean redLight = true;  //SHould the light be on or off
-//int redButtonPressed = 0;  //Was the button just pressed
-//int redButtonDown = 0;  //What is the current state of the button (down or up)
-////boolean blueLight = true;  //SHould the light be on or off
-//int blueButtonPressed = 0;  //Was the button just pressed
-//int blueButtonDown = 0;  //What is the current state of the button (down or up)
 boolean bombExploded = false;
 int distance = distMeterMin; //(Value inputted is 0-35cm)
 int potentiometer = 0;
@@ -55,6 +43,7 @@ GameStage gameStage; //used to control flow of game
 boolean pass = false;  //Won game
 boolean fail = false;  //Failed game
 boolean submitButton = false;
+int correctRounds = 0; //How many times has the player completed all four stages (3 times needed to win)
 
 //=====================================================================================================
 
@@ -63,8 +52,8 @@ void setup() {
   font = loadFont("Monaco.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1]; //on cole's laptop 
+  //String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -79,10 +68,10 @@ void setup() {
 
   //loading images
   wireImg = new PImage[6];
-  wireImg[0] = loadImage("bluewire.png"); 
+  wireImg[0] = loadImage("yellowwire.png"); 
   wireImg[1] = loadImage("greenwire.png");
-  wireImg[2] = loadImage("yellowwire.png");
-  wireImg[3] = loadImage("redwire.png");
+  wireImg[2] = loadImage("redwire.png");
+  wireImg[3] = loadImage("bluewire.png");
   wireImg[4] = loadImage("wirebanner.png");
   wireImg[5] = loadImage("wirecross.png");
 
