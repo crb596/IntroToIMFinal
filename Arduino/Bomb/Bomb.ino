@@ -25,6 +25,9 @@ int yellow = 0;
 //Has the bomb gone off
 int alarm = 0;
 
+//Is the bomb defused
+int defused = 0;
+
 //Are the buttons being pushed
 int blueButton = 0;
 int redButton = 0;
@@ -60,6 +63,7 @@ void loop() {
     red = Serial.parseInt();
     blue = Serial.parseInt();
     alarm = Serial.parseInt();
+    defused = Serial.parseInt();
 
     long duration;
     int cm;
@@ -80,7 +84,7 @@ void loop() {
 
     if (Serial.read() == '\n') {
       //If the bomb has not gone off
-      if(!alarm){
+      if(!alarm && !defused){
         //Turn lights on from read in values
         digitalWrite(yellowLedPin, yellow);
         digitalWrite(greenLedPin, green);
@@ -88,7 +92,7 @@ void loop() {
         digitalWrite(blueLedPin, blue);
       }
       //If bomb has gone off
-      else{
+      else if (alarm){
         //Flash red light and set buzzer off  
         if (millis()>timer){
           onOff = !onOff;
@@ -100,62 +104,30 @@ void loop() {
         }
         tone(buzzerPin, 622, 1000);  //Play buxxer
       }
+      else if(defused){
+          digitalWrite(redLedPin, LOW);
+          digitalWrite(yellowLedPin, LOW);
+          digitalWrite(greenLedPin, HIGH);
+          digitalWrite(blueLedPin, LOW);
+      }
 
       //Read in potentiometer value and the distance meter value, convert to centimeters
       int meter = analogRead(A0);
       delay(1);
 
-
-
-      //Write to processsing in following form "potentiometer,distanceincm(0-35),yellowbuttonpressed,yellowbutton,greenbuttonpressed,greenbutton,redbuttonpressed,redbutton,bluebuttonpressed,bluebutton"
+      //Write to processsing in following form "potentiometer,distanceincm(0-35),yellowbutton,greenbutton,redbutton,bluebutton"
       //Button pressed meaning if that button was just pressed and the value is now changing write 1
       Serial.print(meter);
       Serial.print(',');
       Serial.print(cm);
       Serial.print(',');
-      int yellowButtonRead = digitalRead(yellowButtonPin);
-      if (yellowButtonRead == 1 && yellowButton == 0) {
-        Serial.print(1);
-      }
-      else {
-        Serial.print(0);
-      }
-      yellowButton = yellowButtonRead;
+      Serial.print(digitalRead(yellowButtonPin));
       Serial.print(',');
-      Serial.print(yellowButtonRead);
+      Serial.print(digitalRead(greenButtonPin));
       Serial.print(',');
-      int greenButtonRead = digitalRead(greenButtonPin);
-      if (greenButtonRead == 1 && greenButton == 0) {
-        Serial.print(1);
-      }
-      else {
-        Serial.print(0);
-      }
-      greenButton = greenButtonRead;
+      Serial.print(digitalRead(redButtonPin));
       Serial.print(',');
-      Serial.print(greenButtonRead);
-      Serial.print(',');
-      int redButtonRead = digitalRead(redButtonPin);
-      if (redButtonRead == 1 && redButton == 0) {
-        Serial.print(1);
-      }
-      else {
-        Serial.print(0);
-      }
-      redButton = redButtonRead;
-      Serial.print(',');
-      Serial.print(redButtonRead);
-      Serial.print(',');
-      int blueButtonRead = digitalRead(blueButtonPin);
-      if (blueButtonRead == 1 && blueButton == 0) {
-        Serial.print(1);
-      }
-      else {
-        Serial.print(0);
-      }
-      blueButton = blueButtonRead;
-      Serial.print(',');
-      Serial.println(blueButtonRead);
+      Serial.println(digitalRead(blueButtonPin));
     }
   }
 }

@@ -36,7 +36,7 @@ class GameStage {
 
   //Default constructor
   GameStage() {
-    gameStage = 3;
+    gameStage = 1;
   }
 
   //=======================================================================
@@ -108,6 +108,7 @@ class GameStage {
         }
       }
       //println("count:" + countLights);
+      stageOneSetup = true;
     }
 
     //now check if blue or green light is on
