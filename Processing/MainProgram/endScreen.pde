@@ -11,7 +11,7 @@ void endScreen()
 
 void winScreen()
 {
-  
+  bombDefused = true;
 }
 
 void loseScreen()
