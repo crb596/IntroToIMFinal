@@ -45,7 +45,7 @@ boolean fail = false;  //Failed game
 boolean submitButton = false;
 int correctRounds = 0; //How many times has the player completed all four stages (3 times needed to win)
 
-int screenMode = 1; //1 for start, 2 for general instructions screen, 
+int screenMode = 5; //1 for start, 2 for general instructions screen, 
 //3 for choose player mode, 4 for bomb instruc., 5 for game screen, 6 for end screen
 
 //=====================================================================================================
@@ -101,7 +101,8 @@ void draw() {
   switch (screenMode)
   {
   case 1 :  
-    startScreen();    
+    startScreen();  
+
     break;
     //case 2 : 
     //  instrucScreen(); 
@@ -120,12 +121,15 @@ void draw() {
     break;
   }
 
-  //startGame();
-  //if (!fail && !pass) {
-  //  gameStage.runGame();
-  //}
-  //if (fail) {
-  //  bombExploded = true;
+
+  if (!fail && !pass) {
+    gameStage.runGame();
+  }
+  if (fail || pass) {
+    screenMode = 6;
+  }
+  //if (pass)
+  //{
   //  screenMode = 6;
   //}
 

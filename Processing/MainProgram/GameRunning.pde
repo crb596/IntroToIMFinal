@@ -57,14 +57,14 @@ class GameStage {
     }
 
     //If submit button is pressed some other time than expected stage, decrease the time
-    if (submitButton) {
+    //if (submitButton) {
       //check for game stage
       //if (!(gameStage == 2 || (gameStage == 1 && PButton[1] == true)))
       //{
       //  timer.reduce(10000); //reduce 10 secs
       //  submitButton = false;
       //}
-    }
+    //}
 
     return -1;
   }
@@ -77,15 +77,16 @@ class GameStage {
     //If first time on stage
     if (!stageOneSetup) 
     {
+      //println("hello");
       //intialize variables again
       countLights = 0;
       sum = 0;
-      buttonUsed = false;
+      //buttonUsed = false;
 
       //set up either green or blue on
       buttonCol = int(random(2)); //records the button that was first on
       PButton[buttonCol] = true; //start with the button number picked
-      stageOneSetup = true;
+      
       //println(PButton[buttonCol] + "\n");
 
       //make all lights off first from previous round
@@ -103,11 +104,12 @@ class GameStage {
             lights[i] = true; //this led is lit up
             sum+=(i+1); //add its sum to the score for distMeter
             countLights++;
-            println(sum);
+            //println(sum);
           }
         }
       }
-      println("count:" + countLights);
+      //println("count:" + countLights);
+      stageOneSetup = true;
     }
 
     //now check if blue or green light is on
@@ -370,7 +372,7 @@ class GameStage {
       }
 
       //Set timers
-      buttonUsed = false;
+      //buttonUsed = false;
       timerStart = millis();
       orderIndex = 0;
       stageThreeSetup = true;
@@ -508,7 +510,7 @@ class GameStage {
       while (wires[randomIndex].state == false) {
         randomIndex = (randomIndex + 1) % 4;
       }
-      buttonUsed = false;
+      //buttonUsed = false;
       stageFourSetup = true;
     }
 
@@ -611,6 +613,9 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
+            //Do nothing
+          }
+          else if (correctRounds == 4) {
             pass = true;
           } else {
             gameStage = 1;

@@ -17,8 +17,11 @@ void gameScreen() //was initially named startGame()
   distMeter();
   potMeter();
 
-  //if (timer.timeLeft<=0)
-  //  endGame();
+  if (timer.timeLeft<=0)
+    fail = true;
+  
+  //println(gameStage);
+  //println(gameStage.buttonCol);
 }
 
 //=====================================================================================================
