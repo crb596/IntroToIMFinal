@@ -13,6 +13,7 @@ class GameStage {
   boolean stageOneSetup = false;
   boolean stageTwoSetup = false;
   boolean stageThreeSetup = false;
+  boolean stageFourSetup = false;
 
   //Stage 2 variables
   int buttonCol = -1; //0 for green, 1 for blue, -1 for none
@@ -30,10 +31,12 @@ class GameStage {
   int orderIndex;  //Which button should be pressed (on 0th button, 1st, 2nd, or 3rd)
   boolean buttonUsed = false; //Used to determine if a button is being pressed
 
+  //Stage 4 variables
+  int randomIndex;
 
   //Default constructor
   GameStage() {
-    gameStage = 1;
+    gameStage = 2;
   }
 
   //=======================================================================
@@ -48,6 +51,9 @@ class GameStage {
     }
     if (gameStage == 3) {
       return stageThree();
+    }
+    if (gameStage == 4) {
+      return stageFour();
     }
 
     //If submit button is pressed some other time than expected stage, decrease the time
@@ -231,6 +237,9 @@ class GameStage {
   int stageTwo() {
     //If first time on stage
     if (!stageTwoSetup) {
+      for(int i = 0; i < 4; i++){
+        flashing[i] = false;
+      }
       numberOfLights = int(random(4)+1);  //Set how many lights are flashing
       timerStart = millis();
       flashLength = 500;
@@ -261,32 +270,52 @@ class GameStage {
     }
 
     //Check for a user input
-    if (numberOfLights == 1) {
-      if (potentiometer >= 512 && potentiometer < 777 && submitButton == true) {
+    if (numberOfLights == 1 && submitButton == true) {
+      if (potentiometer >= 512 && potentiometer < 777) {
         //In yellow
         gameStage++;
         submitButton = false;
         stageTwoSetup = false;
       }
-    } else if (numberOfLights == 2) {
-      if (potentiometer >= 0 && potentiometer < 256 && submitButton == true) {
+      //Not in yellow
+      else {
+        fail = true;
+        submitButton = false;
+      }
+    } else if (numberOfLights == 2 && submitButton == true) {
+      if (potentiometer >= 0 && potentiometer < 256) {
         //In red
         gameStage++;
         stageTwoSetup = false;
         submitButton = false;
       }
-    } else if (numberOfLights == 3) {
+      //Not in red
+      else {
+        fail = true;
+        submitButton = false;
+      }
+    } else if (numberOfLights == 3 && submitButton == true) {
       if (potentiometer >= 256 && potentiometer < 512 && submitButton == true) {
         //In orange
         gameStage++;
         stageTwoSetup = false;
         submitButton = false;
       }
-    } else if (numberOfLights == 4) {
+      //not in orange
+      else {
+        fail = true;
+        submitButton = false;
+      }
+    } else if (numberOfLights == 4 && submitButton == true) {
       if (potentiometer >= 777 && potentiometer < 1024 && submitButton == true) {
         //In green
         gameStage++;
         stageTwoSetup = false;
+        submitButton = false;
+      }
+      //If not in green
+      else {
+        fail = true;
         submitButton = false;
       }
     }
@@ -300,6 +329,11 @@ class GameStage {
   int stageThree() {
     //Setup stage three
     if (!stageThreeSetup) {
+      for(int i = 0; i < 4; i++){
+        buttonsPressed[i] = false;
+        order[i] = -1;
+      }
+      
       //Choose order of LEDS
       for (int i = 0; i < 4; i++) {
         //Chose random index to put light in order
@@ -311,13 +345,14 @@ class GameStage {
       }
 
       //Set timers
+      buttonUsed = false;
       timerStart = millis();
       orderIndex = 0;
       stageThreeSetup = true;
     }
 
     //for (int i = 0; i < 4; i++) {
-    //  print(buttonPressed[i] + ", " );
+    //  print(order[i] + ", " );
     //}
     //println();
 
@@ -436,6 +471,136 @@ class GameStage {
       }
     }
 
+    return gameStage;
+  }
+
+  //Choose one of the remaining wires and show that LED
+  int stageFour() {
+    if (!stageFourSetup) {
+      //Choose which wire to cut out of the ones left
+      randomIndex = int(random(4));//Chose a random number 0-3
+      //Make sure wire has not yet been but
+      while (wires[randomIndex].state == false) {
+        randomIndex = (randomIndex + 1) % 4;
+      }
+      buttonUsed = false;
+      stageFourSetup = true;
+    }
+    
+    //Turn the light on
+    lights[0] = false;
+    lights[1] = false;
+    lights[2] = false;
+    lights[3] = false;
+    lights[randomIndex] = true;
+
+    //Check for use button press
+    if (buttonUsed) {
+      boolean tempNotUsed = true;
+      for (int i = 0; i< 4; i++) {
+        if (buttonDown[i] == 1) {
+          tempNotUsed = false;
+        }
+      }
+      if (tempNotUsed) {
+        buttonUsed = false;
+      }
+    }
+
+    if (!buttonUsed) {
+      //Yellow button pressed
+      if (buttonDown[0] == 1) 
+      {
+        buttonUsed = true;
+        //Check to see if the button input is correct according random index
+        if (randomIndex == 0) { //correct input
+          wires[0].state = false;
+          
+          //Check to see if won
+          correctRounds++;
+          if(correctRounds == 3){
+            pass = true;
+          }
+          else{
+            gameStage = 2;
+          }
+        }
+        //Wrong button pressed according to the number
+        else {
+          fail = true;
+        }
+        stageFourSetup = false;
+      }
+      //Green button pressed
+      if (buttonDown[1] == 1) 
+      {
+        buttonUsed = true;
+        //Check to see if the button input is correct according random index
+        if (randomIndex == 1) { //correct input
+          wires[1].state = false;
+          
+          //Check to see if won
+          correctRounds++;
+          if(correctRounds == 3){
+            pass = true;
+          }
+          else{
+            gameStage = 2;
+          }
+        }
+        //Wrong button pressed according to the number
+        else {
+          fail = true;
+        }
+        stageFourSetup = false;
+      }
+      //Red button pressed
+      if (buttonDown[2] == 1) 
+      {
+        buttonUsed = true;
+        //Check to see if the button input is correct according random index
+        if (randomIndex == 2) { //correct input
+          wires[2].state = false;
+          
+          //Check to see if won
+          correctRounds++;
+          if(correctRounds == 3){
+            pass = true;
+          }
+          else{
+            gameStage = 2;
+          }
+        }
+        //Wrong button pressed according to the number
+        else {
+          fail = true;
+        }
+        stageFourSetup = false;
+      }
+      //Blue button pressed
+      if (buttonDown[3] == 1) 
+      {
+        buttonUsed = true;
+        //Check to see if the button input is correct according random index
+        if (randomIndex == 3) { //correct input
+          wires[3].state = false;
+          
+          //Check to see if won
+          correctRounds++;
+          if(correctRounds == 3){
+            pass = true;
+          }
+          else{
+            gameStage = 2;
+          }
+        }
+        //Wrong button pressed according to the number
+        else {
+          fail = true;
+        }
+        stageFourSetup = false;
+      }
+    }
     return gameStage;
   }
 }
