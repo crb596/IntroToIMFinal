@@ -15,7 +15,7 @@ class GameStage {
   boolean stageThreeSetup = false;
   boolean stageFourSetup = false;
 
-  //Stage 2 variables
+  //Stage 1 variables
   int buttonCol = -1; //0 for green, 1 for blue, -1 for none
   int countLights = 0;
   int sum = 0;
@@ -36,7 +36,7 @@ class GameStage {
 
   //Default constructor
   GameStage() {
-    gameStage = 2;
+    gameStage = 1;
   }
 
   //=======================================================================
@@ -77,24 +77,37 @@ class GameStage {
     //If first time on stage
     if (!stageOneSetup) 
     {
+      //intialize variables again
+      countLights = 0;
+      sum = 0;
+      buttonUsed = false;
+
       //set up either green or blue on
       buttonCol = int(random(2)); //records the button that was first on
       PButton[buttonCol] = true; //start with the button number picked
       stageOneSetup = true;
       //println(PButton[buttonCol] + "\n");
 
+      //make all lights off first from previous round
+      for (int i=0; i<4; i++)
+        lights[i] = false;
+
       //Set which LEDs light up
-      for (int i = 0; i < 4; i++) 
+      while (lights[0]==false && lights[1]==false && lights[2]==false && lights[3]==false) //so that all leds are not off
       {
-        int randomState = int(random(2));  //Set random lights to blink
-        if (randomState == 1)
+        for (int i = 0; i < 4; i++) 
         {
-          lights[i] = true; //this led is lit up
-          sum+=(i+1); //add its sum to the score for distMeter
-          countLights++;
-          println(sum);
+          int randomState = int(random(2));  //Set random lights to blink
+          if (randomState == 1)
+          {
+            lights[i] = true; //this led is lit up
+            sum+=(i+1); //add its sum to the score for distMeter
+            countLights++;
+            println(sum);
+          }
         }
       }
+      println("count:" + countLights);
     }
 
     //now check if blue or green light is on
@@ -119,14 +132,18 @@ class GameStage {
         //Yellow button pressed
         if (buttonDown[0] == 1) 
         {
-          buttonUsed = true; //where do i make this false?
+          buttonUsed = true; 
           //Check to see if the button input is correct according to no. of leds
-          if (countLights == 3) { //correct input
+          if (countLights == 3) 
+          { //correct input
             PButton[0] = false;
             if (buttonCol == 0)
               PButton[1]=true; //so if green was the first color, make blue glow next
             else
+            {
               gameStage++; //if green was the second color, go to next stage
+              stageOneSetup = false;
+            }
           }
           //Wrong button pressed according to the number
           else {
@@ -137,7 +154,7 @@ class GameStage {
           }
         }
         //Green button pressed
-        if (buttonDown[1] == 1) 
+        else if (buttonDown[1] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
@@ -146,7 +163,10 @@ class GameStage {
             if (buttonCol == 0)
               PButton[1]=true; 
             else
+            {
               gameStage++;
+              stageOneSetup = false;
+            }
           }
           //Wrong button pressed according to the number
           else {
@@ -157,7 +177,7 @@ class GameStage {
           }
         }
         //Red button pressed
-        if (buttonDown[0] == 1) 
+        else if (buttonDown[2] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
@@ -166,7 +186,10 @@ class GameStage {
             if (buttonCol == 0)
               PButton[1]=true; 
             else
+            {
               gameStage++;
+              stageOneSetup = false;
+            }
           }
           //Wrong button pressed according to the number
           else {
@@ -177,7 +200,7 @@ class GameStage {
           }
         }
         //Blue button pressed
-        if (buttonDown[3] == 1) 
+        else if (buttonDown[3] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
@@ -187,7 +210,10 @@ class GameStage {
             if (buttonCol == 0)
               PButton[1]=true; 
             else
+            {
               gameStage++;
+              stageOneSetup = false;
+            }
           }
           //Wrong button pressed according to the number
           else {
@@ -202,6 +228,28 @@ class GameStage {
 
     if (PButton[1] == true) //i.e. the blue button is on
     {
+      float distReading = (distMeterMax-distMeterMin)/distDiv;
+      if (submitButton)
+      {
+        if (distance >= distMeterMax-sum*distReading && distance <= distMeterMax-(sum-1)*distReading) //i.e. correct distance
+        { 
+          PButton[1] = false;
+          if (buttonCol == 1) //if this was the first light
+            PButton[0]=true; //turn on the next light
+          else
+          {
+            gameStage++; //else move to the next stage
+            stageOneSetup = false;
+          }
+        } else //submit button pressed at wrong time --> fail
+        {
+          fail = true;
+          stageOneSetup = false;
+          PButton[0] = false;
+          PButton[1] = false;
+        }
+        submitButton = false;
+      }
     }
 
     return gameStage;
@@ -214,7 +262,7 @@ class GameStage {
   int stageTwo() {
     //If first time on stage
     if (!stageTwoSetup) {
-      for(int i = 0; i < 4; i++){
+      for (int i = 0; i < 4; i++) {
         flashing[i] = false;
       }
       numberOfLights = int(random(4)+1);  //Set how many lights are flashing
@@ -306,11 +354,11 @@ class GameStage {
   int stageThree() {
     //Setup stage three
     if (!stageThreeSetup) {
-      for(int i = 0; i < 4; i++){
+      for (int i = 0; i < 4; i++) {
         buttonsPressed[i] = false;
         order[i] = -1;
       }
-      
+
       //Choose order of LEDS
       for (int i = 0; i < 4; i++) {
         //Chose random index to put light in order
@@ -463,7 +511,7 @@ class GameStage {
       buttonUsed = false;
       stageFourSetup = true;
     }
-    
+
     //Turn the light on
     lights[0] = false;
     lights[1] = false;
@@ -490,16 +538,16 @@ class GameStage {
       {
         buttonUsed = true;
         //Check to see if the button input is correct according random index
-        if (randomIndex == 0) { //correct input
+        if (randomIndex == 0) 
+        { //correct input
           wires[0].state = false;
-          
+
           //Check to see if won
           correctRounds++;
-          if(correctRounds == 3){
+          if (correctRounds == 3) {
             pass = true;
-          }
-          else{
-            gameStage = 2;
+          } else {
+            gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
@@ -515,14 +563,13 @@ class GameStage {
         //Check to see if the button input is correct according random index
         if (randomIndex == 1) { //correct input
           wires[1].state = false;
-          
+
           //Check to see if won
           correctRounds++;
-          if(correctRounds == 3){
+          if (correctRounds == 3) {
             pass = true;
-          }
-          else{
-            gameStage = 2;
+          } else {
+            gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
@@ -538,14 +585,13 @@ class GameStage {
         //Check to see if the button input is correct according random index
         if (randomIndex == 2) { //correct input
           wires[2].state = false;
-          
+
           //Check to see if won
           correctRounds++;
-          if(correctRounds == 3){
+          if (correctRounds == 3) {
             pass = true;
-          }
-          else{
-            gameStage = 2;
+          } else {
+            gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
@@ -561,14 +607,13 @@ class GameStage {
         //Check to see if the button input is correct according random index
         if (randomIndex == 3) { //correct input
           wires[3].state = false;
-          
+
           //Check to see if won
           correctRounds++;
-          if(correctRounds == 3){
+          if (correctRounds == 3) {
             pass = true;
-          }
-          else{
-            gameStage = 2;
+          } else {
+            gameStage = 1;
           }
         }
         //Wrong button pressed according to the number

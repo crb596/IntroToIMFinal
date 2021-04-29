@@ -1,4 +1,4 @@
-void startGame()
+void gameScreen() //was initially named startGame()
 {
   //for the timer
   if (!started)
@@ -26,7 +26,7 @@ void startGame()
 void gameSetup()
 {
   //loading backgroung image
-  image(bgImg, 0, 0, width, height);
+  image(bgImg[0], 0, 0, width, height);
 
   //for the wire setup
   //tint(0, 0, 0, 100);
@@ -42,12 +42,13 @@ void gameSetup()
   strokeWeight(5);
   stroke(150);
   fill(180);
-  rect(width/25, height/2-distMeterH/2, distMeterW, distMeterH, 50);
+  rect(width/25, height*0.05, distMeterW, distMeterH, 50);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
     fill(0);
-    text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i); //not able to use distDiv here... WHY??
+    //text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i);
+    text("-- "+ (distDiv-i+1) + " --", width/25, height*0.05+distMeterH/(distDiv+1)*i);
   }
 
   //submit button
@@ -55,7 +56,7 @@ void gameSetup()
   stroke(150); //i.e. game has been started
   if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
     && mouseY >= height-(height-distMeterH)/2-height*0.1/2 && mouseY <= height-(height-distMeterH)/2+height*0.1/2 )
-    fill(150, 0, 0, 95);
+    fill(150, 0, 0, 99);
   else
     fill(150, 0, 0, 80);
   rectMode(CENTER);
@@ -101,38 +102,54 @@ void gameSetup()
     rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
     //fill(0, 0, 0, 99);
     //rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
-    fill(0,0,0);
+    fill(0, 0, 24);
     rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   } else if (PButton[1] == true)
   {
     fill(10, 242, 238);
     rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
-    fill(0, 0, 0);
+    fill(0, 24, 0);
     rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   } else {
-    fill(0, 0, 0);
+    fill(0, 24, 0);
     rect(width/25*2+distMeterW*4-distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
+    fill(0, 0, 24);
     rect(width/25*2+distMeterW*4+distMeterW*1.2, height*0.15+distMeterW*2, height*0.15, height*0.15, 10);
   }
   popStyle();
+
+  //led signal color
+  if (buttonDown[0]==1) //i.e. yellow color
+    fill(250, 250, 0);
+  else if (buttonDown[1]==1) //i.e. green color
+    fill(0, 250, 0);
+  else if (buttonDown[2]==1) //i.e. red color
+    fill(250, 0, 0);
+  else if (buttonDown[3]==1) //i.e. blue color
+    fill(0, 0, 250);
+  else
+    fill(0);
+  ellipse(width/25+distMeterW/2, height*0.93, height*0.05, height*0.05);
 }
 
 //=====================================================================================================
 
 void distMeter()
 {
-  float range = map(distance, distMeterMin, distMeterMax, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
+  float range = map(distance, distMeterMax, distMeterMin, 0, distMeterH-distMeterH/distDiv); // map values here from reading from arduino
   //float range = map(mouseX, 0, width, 0, distMeterH-distMeterH/distDiv); //for now
   //show the reading go up and down in distance meter on screen
   pushStyle();
   fill(150, 0, 0, 80);
   noStroke();
-  rect(width/25, height/2+distMeterH/2-distMeterH/distDiv/2, distMeterW, -1*range, 20);
+  //rect(width/25, height/2+distMeterH/2-distMeterH/distDiv/2, distMeterW, -1*range, 20);
+  rect(width/25, height*0.05+distMeterH-distMeterH/distDiv/2, distMeterW, -1*range, 20);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
     fill(0);
-    text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i);
+    //text("-- "+ (distDiv-i+1) + " --", width/25, height/2-distMeterH/2+distMeterH/(distDiv+1)*i);
+    text("-- "+ (distDiv-i+1) + " --", width/25, height*0.05+distMeterH/(distDiv+1)*i);
   }
   popStyle();
 }
