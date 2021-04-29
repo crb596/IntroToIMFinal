@@ -101,7 +101,8 @@ void draw() {
   switch (screenMode)
   {
   case 1 :  
-    startScreen();    
+    startScreen();  
+
     break;
     //case 2 : 
     //  instrucScreen(); 
@@ -120,14 +121,16 @@ void draw() {
     break;
   }
 
-  //startGame();
   if (!fail && !pass) {
     gameStage.runGame();
   }
-  if (fail) {
-    bombExploded = true;
+  if (fail || pass) {
     screenMode = 6;
   }
+  //if (pass)
+  //{
+  //  screenMode = 6;
+  //}
 
   //wires[1].state=false;
 }

@@ -57,14 +57,14 @@ class GameStage {
     }
 
     //If submit button is pressed some other time than expected stage, decrease the time
-    if (submitButton) {
+    //if (submitButton) {
       //check for game stage
       //if (!(gameStage == 2 || (gameStage == 1 && PButton[1] == true)))
       //{
       //  timer.reduce(10000); //reduce 10 secs
       //  submitButton = false;
       //}
-    }
+    //}
 
     return -1;
   }
@@ -77,6 +77,7 @@ class GameStage {
     //If first time on stage
     if (!stageOneSetup) 
     {
+      //println("hello");
       //intialize variables again
       countLights = 0;
       sum = 0;
@@ -84,7 +85,7 @@ class GameStage {
       //set up either green or blue on
       buttonCol = int(random(2)); //records the button that was first on
       PButton[buttonCol] = true; //start with the button number picked
-      stageOneSetup = true;
+      
       //println(PButton[buttonCol] + "\n");
 
       //make all lights off first from previous round
@@ -627,7 +628,7 @@ class GameStage {
           correctRounds++;
           if (correctRounds == 3) {
             //Do nothing
-          } 
+          }
           else if(correctRounds == 4){
             pass = true;
           }
