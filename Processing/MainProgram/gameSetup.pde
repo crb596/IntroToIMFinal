@@ -19,7 +19,7 @@ void gameScreen() //was initially named startGame()
 
   if (timer.timeLeft<=0)
     fail = true;
-  
+
   //println(gameStage);
   //println(gameStage.buttonCol);
 }
@@ -145,8 +145,10 @@ void distMeter()
   pushStyle();
   fill(150, 0, 0, 80);
   noStroke();
+  //height*0.05+distMeterH/(distDiv+1)*i)
   //rect(width/25, height/2+distMeterH/2-distMeterH/distDiv/2, distMeterW, -1*range, 20);
-  rect(width/25, height*0.05+distMeterH-distMeterH/distDiv/2, distMeterW, -1*range, 20);
+  //rect(width/25, height*0.05+distMeterH-distMeterH/distDiv/2, distMeterW, -1*range, 20);
+  rect(width/25, height*0.05+distMeterH, distMeterW, -1*range, 8, 8, 50, 50);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
