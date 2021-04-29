@@ -78,17 +78,21 @@ class GameStage {
       //println(PButton[buttonCol] + "\n");
 
       //Set which LEDs light up
-      for (int i = 0; i < 4; i++) 
+      while (lights[0]==false && lights[1]==false && lights[2]==false && lights[3]==false) //so that all leds are not off
       {
-        int randomState = int(random(2));  //Set random lights to blink
-        if (randomState == 1)
+        for (int i = 0; i < 4; i++) 
         {
-          lights[i] = true; //this led is lit up
-          sum+=(i+1); //add its sum to the score for distMeter
-          countLights++;
-          println(sum);
+          int randomState = int(random(2));  //Set random lights to blink
+          if (randomState == 1)
+          {
+            lights[i] = true; //this led is lit up
+            sum+=(i+1); //add its sum to the score for distMeter
+            countLights++;
+            println(sum);
+          }
         }
       }
+      println("count:" + countLights);
     }
 
     //now check if blue or green light is on
@@ -107,15 +111,16 @@ class GameStage {
           buttonUsed = false;
         }
       }
-      
+
       if (!buttonUsed) 
       {
         //Yellow button pressed
         if (buttonDown[0] == 1) 
         {
-          buttonUsed = true; //where do i make this false?
+          buttonUsed = true; 
           //Check to see if the button input is correct according to no. of leds
-          if (countLights == 3) { //correct input
+          if (countLights == 3) 
+          { //correct input
             PButton[0] = false;
             if (buttonCol == 0)
               PButton[1]=true; //so if green was the first color, make blue glow next
@@ -131,7 +136,7 @@ class GameStage {
           }
         }
         //Green button pressed
-        if (buttonDown[1] == 1) 
+        else if (buttonDown[1] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
@@ -151,7 +156,7 @@ class GameStage {
           }
         }
         //Red button pressed
-        if (buttonDown[0] == 1) 
+        else if (buttonDown[2] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
@@ -171,7 +176,7 @@ class GameStage {
           }
         }
         //Blue button pressed
-        if (buttonDown[3] == 1) 
+        else if (buttonDown[3] == 1) 
         {
           buttonUsed = true;
           //Check to see if the button input is correct according to no. of leds
