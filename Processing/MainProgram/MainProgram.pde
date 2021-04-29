@@ -56,8 +56,8 @@ void setup() {
   font = loadFont("Monaco.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  String portname=Serial.list()[1]; //on cole's laptop 
-  //String portname=Serial.list()[4]; //on shreya's laptop
+  //String portname=Serial.list()[1]; //on cole's laptop 
+  String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -96,13 +96,21 @@ void setup() {
 
 //=====================================================================================================
 
-void draw() {
+void draw() 
+{
+
+  //if (!fail && !pass) {
+  //  gameStage.runGame();
+  //}
+  if (fail || pass) {
+    screenMode = 6;
+  }
 
   switch (screenMode)
   {
   case 1 :  
     startScreen();  
-
+    //gameStage.runGame();
     break;
     //case 2 : 
     //  instrucScreen(); 
@@ -122,11 +130,6 @@ void draw() {
     break;
   }
 
-  //if (!fail && !pass) {
-  //}
-  if (fail || pass) {
-    screenMode = 6;
-  }
   //if (pass)
   //{
   //  screenMode = 6;
@@ -134,8 +137,6 @@ void draw() {
 
   //wires[1].state=false;
 }
-
-//=====================================================================================================
 
 void serialEvent(Serial myPort) {
   String s=myPort.readStringUntil('\n');
