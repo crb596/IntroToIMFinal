@@ -1,4 +1,4 @@
-void startGame()
+void gameScreen() //was initially named startGame()
 {
   //for the timer
   if (!started)
@@ -26,7 +26,7 @@ void startGame()
 void gameSetup()
 {
   //loading backgroung image
-  image(bgImg, 0, 0, width, height);
+  image(bgImg[0], 0, 0, width, height);
 
   //for the wire setup
   //tint(0, 0, 0, 100);
