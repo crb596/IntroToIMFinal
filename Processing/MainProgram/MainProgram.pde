@@ -56,8 +56,8 @@ void setup() {
   font = loadFont("Monaco.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1]; //on cole's laptop 
+  //String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -120,7 +120,6 @@ void draw() {
     endScreen(); //instruction screen for bomb diffusion
     break;
   }
-
 
   if (!fail && !pass) {
     gameStage.runGame();
