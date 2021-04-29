@@ -12,7 +12,7 @@ float wireSetupW;
 int wireCount = 0; //to count how many wires have been cut
 float distMeterH;
 float distMeterW;
-int distDiv = 14; //for the distance meter --> max point is 14 so need to divide into 14 parts
+int distDiv = 10; //for the distance meter --> max point is 14 so need to divide into 14 parts
 int potDiv = 4; //number of parts we want to divide the potentiometer in
 
 Timer timer;
