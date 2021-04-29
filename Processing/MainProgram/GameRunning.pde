@@ -36,7 +36,7 @@ class GameStage {
 
   //Default constructor
   GameStage() {
-    gameStage = 1;
+    gameStage = 3;
   }
 
   //=======================================================================
@@ -80,7 +80,6 @@ class GameStage {
       //intialize variables again
       countLights = 0;
       sum = 0;
-      buttonUsed = false;
 
       //set up either green or blue on
       buttonCol = int(random(2)); //records the button that was first on
@@ -103,11 +102,11 @@ class GameStage {
             lights[i] = true; //this led is lit up
             sum+=(i+1); //add its sum to the score for distMeter
             countLights++;
-            println(sum);
+            //println(sum);
           }
         }
       }
-      println("count:" + countLights);
+      //println("count:" + countLights);
     }
 
     //now check if blue or green light is on
@@ -370,16 +369,16 @@ class GameStage {
       }
 
       //Set timers
-      buttonUsed = false;
       timerStart = millis();
       orderIndex = 0;
       stageThreeSetup = true;
     }
 
-    //for (int i = 0; i < 4; i++) {
-    //  print(order[i] + ", " );
-    //}
-    //println();
+    for (int i = 0; i < 4; i++) {
+      print(order[i] + ", " );
+    }
+    println();
+    println(orderIndex);
 
 
     //Flash lights in order//If timer if 0 - 199ms
@@ -445,6 +444,7 @@ class GameStage {
         }
         //Wrong order
         else {
+          println("Not yellow");
           fail = true;
           stageThreeSetup = false;
         }
@@ -458,6 +458,7 @@ class GameStage {
         }
         //Wrong order
         else {
+          println("Not green");
           fail = true;
           stageThreeSetup = false;
         }
@@ -471,6 +472,7 @@ class GameStage {
         }
         //Wrong order
         else {
+          println("Not red");
           fail = true;
           stageThreeSetup = false;
         }
@@ -484,6 +486,7 @@ class GameStage {
         }
         //Wrong order
         else {
+          println("Not blue");
           fail = true;
           stageThreeSetup = false;
         }
@@ -501,6 +504,7 @@ class GameStage {
 
   //Choose one of the remaining wires and show that LED
   int stageFour() {
+    println("fail: ", fail);
     if (!stageFourSetup) {
       //Choose which wire to cut out of the ones left
       randomIndex = int(random(4));//Chose a random number 0-3
@@ -508,7 +512,6 @@ class GameStage {
       while (wires[randomIndex].state == false) {
         randomIndex = (randomIndex + 1) % 4;
       }
-      buttonUsed = false;
       stageFourSetup = true;
     }
 
@@ -545,8 +548,12 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
+            //Do nothing
+          } 
+          else if(correctRounds == 4){
             pass = true;
-          } else {
+          }
+          else {
             gameStage = 1;
           }
         }
@@ -567,8 +574,12 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
+            //Do nothing
+          } 
+          else if(correctRounds == 4){
             pass = true;
-          } else {
+          }
+          else {
             gameStage = 1;
           }
         }
@@ -589,8 +600,12 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
+            //Do nothing
+          } 
+          else if(correctRounds == 4){
             pass = true;
-          } else {
+          }
+          else {
             gameStage = 1;
           }
         }
@@ -611,8 +626,12 @@ class GameStage {
           //Check to see if won
           correctRounds++;
           if (correctRounds == 3) {
+            //Do nothing
+          } 
+          else if(correctRounds == 4){
             pass = true;
-          } else {
+          }
+          else {
             gameStage = 1;
           }
         }

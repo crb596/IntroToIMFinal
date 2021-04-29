@@ -45,7 +45,7 @@ boolean fail = false;  //Failed game
 boolean submitButton = false;
 int correctRounds = 0; //How many times has the player completed all four stages (3 times needed to win)
 
-int screenMode = 1; //1 for start, 2 for general instructions screen, 
+int screenMode = 5; //1 for start, 2 for general instructions screen, 
 //3 for choose player mode, 4 for bomb instruc., 5 for game screen, 6 for end screen
 
 //=====================================================================================================
@@ -56,8 +56,8 @@ void setup() {
   font = loadFont("Monaco.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1]; //on cole's laptop 
+  //String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -121,13 +121,13 @@ void draw() {
   }
 
   //startGame();
-  //if (!fail && !pass) {
-  //  gameStage.runGame();
-  //}
-  //if (fail) {
-  //  bombExploded = true;
-  //  screenMode = 6;
-  //}
+  if (!fail && !pass) {
+    gameStage.runGame();
+  }
+  if (fail) {
+    bombExploded = true;
+    screenMode = 6;
+  }
 
   //wires[1].state=false;
 }
