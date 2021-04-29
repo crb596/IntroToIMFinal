@@ -96,13 +96,21 @@ void setup() {
 
 //=====================================================================================================
 
-void draw() {
+void draw() 
+{
+
+  //if (!fail && !pass) {
+  //  gameStage.runGame();
+  //}
+  if (fail || pass) {
+    screenMode = 6;
+  }
 
   switch (screenMode)
   {
   case 1 :  
     startScreen();  
-
+    //gameStage.runGame();
     break;
     //case 2 : 
     //  instrucScreen(); 
@@ -115,18 +123,14 @@ void draw() {
     //  break; 
   case 5 : 
     gameScreen(); //instruction screen for bomb diffusion
+    gameStage.runGame();
     break; 
   case 6 : 
     endScreen(); //instruction screen for bomb diffusion
     break;
   }
 
-  if (!fail && !pass) {
-    gameStage.runGame();
-  }
-  if (fail || pass) {
-    screenMode = 6;
-  }
+
   //if (pass)
   //{
   //  screenMode = 6;
