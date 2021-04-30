@@ -54,16 +54,6 @@ class GameStage {
       return stageFour();
     }
 
-    //If submit button is pressed some other time than expected stage, decrease the time
-    //if (submitButton) {
-      //check for game stage
-      //if (!(gameStage == 2 || (gameStage == 1 && PButton[1] == true)))
-      //{
-      //  timer.reduce(10000); //reduce 10 secs
-      //  submitButton = false;
-      //}
-    //}
-
     return -1;
   }
 
@@ -83,7 +73,7 @@ class GameStage {
       //set up either green or blue on
       buttonCol = int(random(2)); //records the button that was first on
       PButton[buttonCol] = true; //start with the button number picked
-      
+
       //println(PButton[buttonCol] + "\n");
 
       //make all lights off first from previous round
@@ -147,6 +137,10 @@ class GameStage {
           //Wrong button pressed according to the number
           else {
             fail = true;
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[1].play();
             stageOneSetup = false;
             PButton[0] = false;
             PButton[1] = false;
@@ -170,6 +164,10 @@ class GameStage {
           //Wrong button pressed according to the number
           else {
             fail = true;
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[1].play();
             stageOneSetup = false;
             PButton[0] = false;
             PButton[1] = false;
@@ -193,6 +191,10 @@ class GameStage {
           //Wrong button pressed according to the number
           else {
             fail = true;
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[1].play();
             stageOneSetup = false;
             PButton[0] = false;
             PButton[1] = false;
@@ -217,6 +219,10 @@ class GameStage {
           //Wrong button pressed according to the number
           else {
             fail = true;
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[1].play();
             stageOneSetup = false;
             PButton[0] = false;
             PButton[1] = false;
@@ -227,6 +233,28 @@ class GameStage {
 
     if (PButton[1] == true) //i.e. the blue button is on
     {
+      //Look if someone hits a button in this stage and if they do decrement the time
+      if (buttonUsed) {
+        boolean tempNotUsed = true;
+        for (int i = 0; i< 4; i++) {
+          if (buttonDown[i] == 1) {
+            tempNotUsed = false;
+          }
+        }
+        if (tempNotUsed) {
+          buttonUsed = false;
+        }
+      }
+
+      if (!buttonUsed) {
+        if (buttonDown[0] == 1 || buttonDown[1] == 1 || buttonDown[2] == 1 || buttonDown[3] == 1) {
+          buttonUsed = true; 
+          timer.reduce(10000); //reduce 10 secs
+        }
+      }
+
+
+
       float distReading = (distMeterMax-distMeterMin)/distDiv;
       if (submitButton)
       {
@@ -243,6 +271,10 @@ class GameStage {
         } else //submit button pressed at wrong time --> fail
         {
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
           stageOneSetup = false;
           PButton[0] = false;
           PButton[1] = false;
@@ -293,6 +325,28 @@ class GameStage {
       }
     }
 
+
+    //Look if someone hits a button in this stage and if they do decrement the time
+    if (buttonUsed) {
+      boolean tempNotUsed = true;
+      for (int i = 0; i< 4; i++) {
+        if (buttonDown[i] == 1) {
+          tempNotUsed = false;
+        }
+      }
+      if (tempNotUsed) {
+        buttonUsed = false;
+      }
+    }
+
+    if (!buttonUsed) {
+      if (buttonDown[0] == 1 || buttonDown[1] == 1 || buttonDown[2] == 1 || buttonDown[3] == 1) {
+        buttonUsed = true; 
+        timer.reduce(10000); //reduce 10 secs
+      }
+    }
+
+
     //Check for a user input
     if (numberOfLights == 1 && submitButton == true) {
       if (potentiometer >= 512 && potentiometer < 777) {
@@ -304,6 +358,14 @@ class GameStage {
       //Not in yellow
       else {
         fail = true;
+        sounds[0].stop();
+        sounds[1].stop();
+        sounds[2].stop();
+        sounds[1].play();
+        sounds[0].stop();
+        sounds[1].stop();
+        sounds[2].stop();
+        sounds[1].play();
         submitButton = false;
       }
     } else if (numberOfLights == 2 && submitButton == true) {
@@ -316,6 +378,10 @@ class GameStage {
       //Not in red
       else {
         fail = true;
+        sounds[0].stop();
+        sounds[1].stop();
+        sounds[2].stop();
+        sounds[1].play();
         submitButton = false;
       }
     } else if (numberOfLights == 3 && submitButton == true) {
@@ -328,6 +394,10 @@ class GameStage {
       //not in orange
       else {
         fail = true;
+        sounds[0].stop();
+        sounds[1].stop();
+        sounds[2].stop();
+        sounds[1].play();
         submitButton = false;
       }
     } else if (numberOfLights == 4 && submitButton == true) {
@@ -340,6 +410,10 @@ class GameStage {
       //If not in green
       else {
         fail = true;
+        sounds[0].stop();
+        sounds[1].stop();
+        sounds[2].stop();
+        sounds[1].play();
         submitButton = false;
       }
     }
@@ -444,8 +518,11 @@ class GameStage {
         }
         //Wrong order
         else {
-          println("Not yellow");
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
           stageThreeSetup = false;
         }
       }
@@ -458,8 +535,11 @@ class GameStage {
         }
         //Wrong order
         else {
-          println("Not green");
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
           stageThreeSetup = false;
         }
       }
@@ -472,8 +552,11 @@ class GameStage {
         }
         //Wrong order
         else {
-          println("Not red");
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
           stageThreeSetup = false;
         }
       }
@@ -486,8 +569,11 @@ class GameStage {
         }
         //Wrong order
         else {
-          println("Not blue");
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
           stageThreeSetup = false;
         }
       }
@@ -548,17 +634,23 @@ class GameStage {
           correctRounds++;
           if (correctRounds == 3) {
             //Do nothing
-          } 
-          else if(correctRounds == 4){
+          } else if (correctRounds == 4) {
             pass = true;
-          }
-          else {
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[0].play();
+          } else {
             gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
         else {
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
         }
         stageFourSetup = false;
       }
@@ -574,17 +666,23 @@ class GameStage {
           correctRounds++;
           if (correctRounds == 3) {
             //Do nothing
-          } 
-          else if(correctRounds == 4){
+          } else if (correctRounds == 4) {
             pass = true;
-          }
-          else {
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[0].play();
+          } else {
             gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
         else {
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
         }
         stageFourSetup = false;
       }
@@ -600,17 +698,23 @@ class GameStage {
           correctRounds++;
           if (correctRounds == 3) {
             //Do nothing
-          } 
-          else if(correctRounds == 4){
+          } else if (correctRounds == 4) {
             pass = true;
-          }
-          else {
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[0].play();
+          } else {
             gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
         else {
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
         }
         stageFourSetup = false;
       }
@@ -626,17 +730,23 @@ class GameStage {
           correctRounds++;
           if (correctRounds == 3) {
             //Do nothing, runs stage 4 again with last wire
-          }
-          else if(correctRounds == 4){
+          } else if (correctRounds == 4) {
             pass = true;
-          }
-          else {
+            sounds[0].stop();
+            sounds[1].stop();
+            sounds[2].stop();
+            sounds[0].play();
+          } else {
             gameStage = 1;
           }
         }
         //Wrong button pressed according to the number
         else {
           fail = true;
+          sounds[0].stop();
+          sounds[1].stop();
+          sounds[2].stop();
+          sounds[1].play();
         }
         stageFourSetup = false;
       }
