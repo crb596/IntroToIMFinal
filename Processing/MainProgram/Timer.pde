@@ -31,7 +31,7 @@ class Timer
     stroke(155, 0, 0);
     rect(width/25*2+distMeterW*4, height*0.15, distMeterW*4, distMeterW*1.5);
     //for the time
-    textFont(font);
+    textFont(font[0]);
     textSize(75);
     textAlign(CENTER, CENTER);
     fill(250, 0, 0);

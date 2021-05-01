@@ -5,6 +5,7 @@ void gameScreen() //was initially named startGame()
   {
     timer = new Timer(millis()); //initialize the object when game is started
     timer.display();
+    reInitialize();
     started = true;
   }
 
@@ -172,4 +173,15 @@ void potMeter()
   //rotate(0);
   //translate(0,0); 
   popMatrix();
+}
+
+//=====================================================================================================
+
+void reInitialize()
+{
+  bombExploded = false;
+  bombDefused = false;
+  pass = false;  
+  fail = false;  
+  correctRounds = 0;
 }
