@@ -1,8 +1,10 @@
 //for ARDUINO
 import processing.serial.*;
+import processing.sound.*;
 Serial myPort;
 
 //PROCESSING STUFF
+SoundFile[] sounds = new SoundFile[3];
 
 PFont[] font;
 
@@ -59,13 +61,16 @@ void setup() {
   font[1] = loadFont("handwriting.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1]; //on cole's laptop 
+  //String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
 
   //PROCESSING STUFF
+  sounds[0] = new SoundFile(this, "Defused.mp3");
+  sounds[1] = new SoundFile(this, "Explosion.mp3");
+  sounds[2] = new SoundFile(this, "Beep.mp3");
 
   //initializing global variables
   wireSetupH = height;

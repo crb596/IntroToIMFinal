@@ -5,6 +5,7 @@ void endScreen()
 
   started = false;
 
+
   if (pass)
     winScreen();
   if (fail)
@@ -15,6 +16,10 @@ void endScreen()
 
 void winScreen()
 {
+  sounds[0].stop();
+  sounds[1].stop();
+  sounds[2].stop();
+  sounds[0].play();
   bombDefused = true;
   
   //loading backgroung image
@@ -80,4 +85,5 @@ void loseScreen()
   popStyle();
 
   //popMatrix();
+
 }
