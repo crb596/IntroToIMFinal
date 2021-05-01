@@ -6,7 +6,7 @@ Serial myPort;
 //PROCESSING STUFF
 SoundFile[] sounds = new SoundFile[3];
 
-PFont font;
+PFont[] font;
 
 //declaring global Variables
 float wireSetupH;
@@ -26,6 +26,7 @@ String[] colNames = {"blue", "green", "yellow", "red"};
 //loading images
 PImage[] wireImg; //wire setup on screen
 PImage[] bgImg; //for the background
+PImage[] endImg; //images for end screen
 PImage arcImg;
 PImage needleImg;
 
@@ -47,7 +48,7 @@ boolean fail = false;  //Failed game
 boolean submitButton = false;
 int correctRounds = 0; //How many times has the player completed all four stages (3 times needed to win)
 
-int screenMode = 5; //1 for start, 2 for general instructions screen, 
+int screenMode = 1; //1 for start, 2 for general instructions screen, 
 //3 for choose player mode, 4 for bomb instruc., 5 for game screen, 6 for end screen
 
 //=====================================================================================================
@@ -55,7 +56,9 @@ int screenMode = 5; //1 for start, 2 for general instructions screen,
 void setup() {
   //fullScreen();
   size(1350, 800);
-  font = loadFont("Monaco.vlw");
+  font = new PFont[5];
+  font[0] = loadFont("Monaco.vlw");
+  font[1] = loadFont("handwriting.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
   String portname=Serial.list()[1]; //on cole's laptop 
@@ -84,11 +87,23 @@ void setup() {
   wireImg[4] = loadImage("wirebanner.png");
   wireImg[5] = loadImage("wirecross.png");
 
-  bgImg = new PImage[3];
+  bgImg = new PImage[5];
   bgImg[0] = loadImage("bg2.jpeg");
-  bgImg[1] = loadImage("bg3.jpeg");
+  bgImg[1] = loadImage("bg7.png");
+  bgImg[2] = loadImage("bg6.jpeg");
   arcImg = loadImage("arc.png");
   needleImg = loadImage("needle2.png");
+  
+  endImg = new PImage[10];
+  endImg[0] = loadImage("shrapnel.png");
+  endImg[1] = loadImage("explode2.png");
+  endImg[2] = loadImage("shrapnel2.png");
+  endImg[3] = loadImage("shrapnel3.png");
+  endImg[4] = loadImage("shrapnel4.png");
+  endImg[5] = loadImage("cables.png");
+  endImg[6] = loadImage("cable2.png");
+  endImg[7] = loadImage("cables3.png");
+  endImg[8] = loadImage("boom.png");
 
   //initializing class objects
   wires = new Wire[4];
