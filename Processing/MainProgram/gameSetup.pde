@@ -20,9 +20,13 @@ void gameScreen() //was initially named startGame()
   distMeter();
   potMeter();
 
-  if (timer.timeLeft<=0)
+  if (timer.timeLeft<=0){
     fail = true;
-
+    sounds[0].stop();
+    sounds[1].stop();
+    sounds[2].stop();
+    sounds[1].play();
+  }
   //println(gameStage);
   //println(gameStage.buttonCol);
 
