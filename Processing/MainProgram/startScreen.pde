@@ -89,15 +89,15 @@ void instrucScreen()
 {
   //loading backgroung image
   image(bgImg[1], 0, 0, width, height);
-  
+
   //white slate
   pushStyle();
   rectMode(CORNERS);
-  fill(255,255,255,150);
+  fill(255, 255, 255, 150);
   noStroke();
   rect(width*0.1, height*.1, width*0.9, height*.9);
   popStyle();
-  
+
   //heading
   pushStyle();
   pushMatrix();
@@ -108,7 +108,7 @@ void instrucScreen()
   text("How to Play", width/2, height*0.18);
   popMatrix();
   popStyle();
-  
+
   //body text
   pushStyle();
   textSize(24);
@@ -116,6 +116,9 @@ void instrucScreen()
   String s = "This is a bomb diffusing game. \n\nYou have been called into a house to diffuse a bomb. It is time sensitive. You have only got 5 minutes. \n\nOnce you enter the room with the bomb, you will see a screen with a bomb interface (Processing) and some hardware attached (Arduino). \n\nYou will have to follow a series of instructions to diffuse the bomb. These instructions can be read by your partner or by yourself if you are alone. \nFollowing the steps is crucial as a wrong move could set off the bomb or reduce your time. \nCommunication is essential. \n\n GOOD LUCK!";
   text(s, width*0.15, height*0.25, width*0.7, height*0.6);
   popStyle();
+
+  //back button
+  image(bgImg[4], width*0.98, height*0.98, -height*0.08, -height*0.08);
 }
 
 //============================================================================================================
@@ -135,7 +138,7 @@ void modeScreen() //to choose player mode - bomb diffuser or instructions giver
   text("Choose player mode:", width/2, height*0.3);
   popMatrix();
   popStyle();
-  
+
   //buttons
   pushStyle();
   textAlign(CENTER, CENTER);
@@ -184,6 +187,9 @@ void modeScreen() //to choose player mode - bomb diffuser or instructions giver
   }
 
   popStyle();
+
+  //back button
+  image(bgImg[4], width*0.98, height*0.98, -height*0.08, -height*0.08);
 }
 
 //============================================================================================================
@@ -193,4 +199,14 @@ void bombInstScreen()
   //loading backgroung image
   image(bgImg[0], 0, 0, width, height);
   image(bgImg[3], 0, 0, width, height);
+
+  //back button
+  pushStyle();
+  pushMatrix();
+  ellipseMode(CORNERS);
+  fill(255, 255, 255, 210);
+  ellipse(width*0.98-height*0.09, height*0.98-height*0.08, width*0.99, height*0.98);
+  image(bgImg[4], width*0.98, height*0.98, -height*0.08, -height*0.08);
+  popMatrix();
+  popStyle();
 }

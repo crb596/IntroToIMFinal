@@ -18,6 +18,6 @@ class Wire
       col = color(250, 250, 0);
     else if (colType == "red")
       col = color(250, 0, 0);
-      state = true; //by default, all wores aree uncut
+    state = true; //by default, all wores aree uncut
   }
 };

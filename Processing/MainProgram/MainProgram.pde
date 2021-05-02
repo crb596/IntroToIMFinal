@@ -89,11 +89,13 @@ void setup() {
   wireImg[5] = loadImage("wirecross.png");
 
   //background and game screen
-  bgImg = new PImage[5];
+  bgImg = new PImage[6];
   bgImg[0] = loadImage("bg2.jpeg");
   bgImg[1] = loadImage("bg7.png");
   bgImg[2] = loadImage("bg6.jpeg");
   bgImg[3] = loadImage("Instructions.png");
+  bgImg[4] = loadImage("back.png");
+  bgImg[5] = loadImage("home.png");
   arcImg = loadImage("arc.png");
   needleImg = loadImage("needle2.png");
 
@@ -108,7 +110,7 @@ void setup() {
   endImg[6] = loadImage("cable2.png");
   endImg[7] = loadImage("cables3.png");
   endImg[8] = loadImage("boom.png");
-  endImg[9] = loadImage("badge2.png");
+  endImg[9] = loadImage("badge1.png");
 
   //initializing class objects
   wires = new Wire[4];
@@ -201,17 +203,12 @@ void mouseClicked()
   }
 
   //for buttons og different screens
-  if (screenMode == 1)
-  {
-    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.6-height*0.1/2 && mouseY<height*0.6+height*0.1/2)
-      screenMode = 3;
-    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.75-height*0.1/2 && mouseY<height*0.75+height*0.1/2)
-      screenMode = 2;
-  }
 
   if (screenMode == 2)
   {
     //back buttton
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 1;
   }
 
   if (screenMode == 3)
@@ -220,20 +217,39 @@ void mouseClicked()
       screenMode = 5;
     if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.7-height*0.1/2 && mouseY<height*0.7+height*0.1/2)
       screenMode = 4;
+
     //back button
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 1;
   }
-  
+
+  if (screenMode == 1)
+  {
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.6-height*0.1/2 && mouseY<height*0.6+height*0.1/2)
+      screenMode = 3;
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.75-height*0.1/2 && mouseY<height*0.75+height*0.1/2)
+      screenMode = 2;
+  }
+
   if (screenMode == 4)
   {
     //back button
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 3;
   }
-  
+
   //specifically no back or home button on game screen
-  
+
   if (screenMode == 6)
   {
     //play again button
-    
+    if (mouseX > width/2-width*0.18/2 && mouseX < width/2+width*0.18/2 && mouseY > height*0.88-height*0.07/2 && mouseY < height*0.88+height*0.07/2)
+    {
+      screenMode = 1;
+      pass = false;
+      fail = false;
+    }
+
     //home button
   }
 }

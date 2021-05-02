@@ -195,4 +195,6 @@ void reInitialize()
   correctRounds = 0;
   PButton[0] = false;
   PButton[1] = false;
+  for (int i=0; i<wires.length; i++) 
+    wires[i].state = true;
 }

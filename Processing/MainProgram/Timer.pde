@@ -53,7 +53,7 @@ class Timer
     textSize(55);
     textAlign(CENTER, CENTER);
     fill(250, 250, 0);
-    text(minutes + ":" + seconds, width/2, height*0.75);
+    text(minutes + ":" + seconds, width/2, height*0.7);
     popStyle();
   }
 
