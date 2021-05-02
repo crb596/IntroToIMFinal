@@ -3,9 +3,11 @@ void gameScreen() //was initially named startGame()
   //for the timer
   if (!started)
   {
-    timer = new Timer(millis()); //initialize the object when game is started
-    timer.display();
+    gameStage = new GameStage();
     reInitialize();
+    //Timer timer;
+    timer = new Timer(millis()); //initialize the object when game is started
+    timer.display1();
     started = true;
   }
 
@@ -13,7 +15,7 @@ void gameScreen() //was initially named startGame()
 
   //update and display timer periodically
   timer.update();
-  timer.display();
+  timer.display1();
 
   distMeter();
   potMeter();
@@ -23,6 +25,8 @@ void gameScreen() //was initially named startGame()
 
   //println(gameStage);
   //println(gameStage.buttonCol);
+
+  gameStage.runGame();
 }
 
 //=====================================================================================================
@@ -46,7 +50,10 @@ void gameSetup()
   strokeWeight(5);
   stroke(150);
   fill(180);
+  //check
   rect(width/25, height*0.05, distMeterW, distMeterH, 50);
+  textFont(font[0]);
+  textSize(12);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
@@ -150,6 +157,8 @@ void distMeter()
   //rect(width/25, height/2+distMeterH/2-distMeterH/distDiv/2, distMeterW, -1*range, 20);
   //rect(width/25, height*0.05+distMeterH-distMeterH/distDiv/2, distMeterW, -1*range, 20);
   rect(width/25, height*0.05+distMeterH, distMeterW, -1*range, 8, 8, 50, 50);
+  textFont(font[0]);
+  textSize(12);
   for (int i = 1; i <= distDiv; i++)
   {
     //textAlign(CENTER);
@@ -184,4 +193,8 @@ void reInitialize()
   pass = false;  
   fail = false;  
   correctRounds = 0;
+  PButton[0] = false;
+  PButton[1] = false;
+  for (int i=0; i<wires.length; i++) 
+    wires[i].state = true;
 }

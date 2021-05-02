@@ -61,8 +61,8 @@ void setup() {
   font[1] = loadFont("handwriting.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  String portname=Serial.list()[1]; //on cole's laptop 
-  //String portname=Serial.list()[4]; //on shreya's laptop
+  //String portname=Serial.list()[1]; //on cole's laptop 
+  String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -79,6 +79,7 @@ void setup() {
   distMeterW = width/15;
 
   //loading images
+  //for the wires
   wireImg = new PImage[6];
   wireImg[0] = loadImage("yellowwire.png"); 
   wireImg[1] = loadImage("greenwire.png");
@@ -87,13 +88,18 @@ void setup() {
   wireImg[4] = loadImage("wirebanner.png");
   wireImg[5] = loadImage("wirecross.png");
 
-  bgImg = new PImage[5];
+  //background and game screen
+  bgImg = new PImage[6];
   bgImg[0] = loadImage("bg2.jpeg");
   bgImg[1] = loadImage("bg7.png");
   bgImg[2] = loadImage("bg6.jpeg");
+  bgImg[3] = loadImage("Instructions.png");
+  bgImg[4] = loadImage("back.png");
+  bgImg[5] = loadImage("home.png");
   arcImg = loadImage("arc.png");
   needleImg = loadImage("needle2.png");
-  
+
+  //endscreen
   endImg = new PImage[10];
   endImg[0] = loadImage("shrapnel.png");
   endImg[1] = loadImage("explode2.png");
@@ -104,6 +110,7 @@ void setup() {
   endImg[6] = loadImage("cable2.png");
   endImg[7] = loadImage("cables3.png");
   endImg[8] = loadImage("boom.png");
+  endImg[9] = loadImage("badge1.png");
 
   //initializing class objects
   wires = new Wire[4];
@@ -111,7 +118,7 @@ void setup() {
     wires[i] = new Wire(colNames[i]);
   }
 
-  gameStage = new GameStage();
+  //gameStage = new GameStage();
 }
 
 //=====================================================================================================
@@ -122,6 +129,7 @@ void draw()
   //if (!fail && !pass) {
   //  gameStage.runGame();
   //}
+
   if (fail || pass) {
     screenMode = 6;
   }
@@ -132,30 +140,23 @@ void draw()
     startScreen();  
     //gameStage.runGame();
     break;
-    //case 2 : 
-    //  instrucScreen(); 
-    //  break;
-    //case 3 : 
-    //  chooseScreen(); //to choose player mode
-    //  break;
-    //case 4 : 
-    //  bombInstScreen(); //instruction screen for bomb diffusion
-    //  break; 
+  case 2 : 
+    instrucScreen(); 
+    break;
+  case 3 : 
+    modeScreen(); //to choose player mode
+    break;
+  case 4 : 
+    bombInstScreen(); //instruction screen for bomb diffusion
+    break; 
   case 5 : 
     gameScreen(); //instruction screen for bomb diffusion
-    gameStage.runGame();
+    //gameStage.runGame();
     break; 
   case 6 : 
     endScreen(); //instruction screen for bomb diffusion
     break;
   }
-
-  //if (pass)
-  //{
-  //  screenMode = 6;
-  //}
-
-  //wires[1].state=false;
 }
 
 void serialEvent(Serial myPort) {
@@ -180,8 +181,9 @@ void serialEvent(Serial myPort) {
 
 //=====================================================================================================
 
-void mousePressed()
+void mouseClicked()
 {
+  //for gamescreen
   if (started) //i.e. game has been started
   {
     if (mouseX >= width/25*2+distMeterW*2 && mouseX <= width/25*2+distMeterW*6 
@@ -193,7 +195,61 @@ void mousePressed()
       {
         timer.reduce(10000); //reduce 10 secs
         submitButton = false;
+        //only for testing purposes
+        //pass = true;
+        //timer.timeTaken = timer.timerLength - timer.timeLeft;
       }
     }
+  }
+
+  //for buttons og different screens
+
+  if (screenMode == 2)
+  {
+    //back buttton
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 1;
+  }
+
+  if (screenMode == 3)
+  {
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.55-height*0.1/2 && mouseY<height*0.55+height*0.1/2)
+      screenMode = 5;
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.7-height*0.1/2 && mouseY<height*0.7+height*0.1/2)
+      screenMode = 4;
+
+    //back button
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 1;
+  }
+
+  if (screenMode == 1)
+  {
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.6-height*0.1/2 && mouseY<height*0.6+height*0.1/2)
+      screenMode = 3;
+    if (mouseX>width/2-width*0.3/2 && mouseX<width/2+width*0.3/2 && mouseY>height*0.75-height*0.1/2 && mouseY<height*0.75+height*0.1/2)
+      screenMode = 2;
+  }
+
+  if (screenMode == 4)
+  {
+    //back button
+    if (mouseX>width*0.98-height*0.08 && mouseX<width*0.98 && mouseY>height*0.98-height*0.08 && mouseY<height*0.98)
+      screenMode = 3;
+  }
+
+  //specifically no back or home button on game screen
+
+  if (screenMode == 6)
+  {
+    //play again button
+    if (mouseX > width/2-width*0.18/2 && mouseX < width/2+width*0.18/2 && mouseY > height*0.88-height*0.07/2 && mouseY < height*0.88+height*0.07/2)
+    {
+      screenMode = 1;
+      pass = false;
+      fail = false;
+    }
+
+    //home button
   }
 }
