@@ -85,6 +85,6 @@ class Timer
     sounds[2].play();
     penalty+=time; //reduce the time when a wrong input is given
     reduceTimeSound = millis(); //record the time when bomb went off
-    bombExploded = true; //to make arduino buzzer sound for 1 sec
+    //bombExploded = true; //to make arduino buzzer sound for 1 sec
   }
 }
