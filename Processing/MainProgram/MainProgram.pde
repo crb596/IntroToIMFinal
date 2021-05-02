@@ -61,8 +61,8 @@ void setup() {
   font[1] = loadFont("handwriting.vlw");
   //println(Serial.list());
   //connecting to ARDUINO  
-  //String portname=Serial.list()[1]; //on cole's laptop 
-  String portname=Serial.list()[4]; //on shreya's laptop
+  String portname=Serial.list()[1]; //on cole's laptop 
+  //String portname=Serial.list()[4]; //on shreya's laptop
   myPort = new Serial(this, portname, 9600);
   myPort.clear();
   myPort.bufferUntil('\n');
@@ -248,6 +248,15 @@ void mouseClicked()
       screenMode = 1;
       pass = false;
       fail = false;
+      bombExploded = false;
+      bombDefused = false;
+      sounds[0].stop();
+      sounds[1].stop();
+      sounds[2].stop();
+      lights[0] = false;
+      lights[1] = false;
+      lights[2] = false;
+      lights[3] = false;
     }
 
     //home button

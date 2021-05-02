@@ -61,8 +61,10 @@ class Timer
   {
     passedTime = millis()-startTime;
     timeLeft = timerLength-passedTime-penalty;
-    if (millis()>reduceTimeSound+10)
+    //What is this line for?
+    if (millis()>reduceTimeSound+10){
       bombExploded = false;
+    }
   }
 
   void convert(int time)
