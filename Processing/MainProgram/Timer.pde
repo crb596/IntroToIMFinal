@@ -10,6 +10,7 @@ class Timer
   String seconds;
   int sec;
   int reduceTimeSound;
+  int timeTaken;
 
   Timer(int stime)
   {
@@ -17,10 +18,11 @@ class Timer
     passedTime = 0;
     timerLength = 1000*60*5+1000;
     timeLeft = timerLength/1000;
+    timeTaken = 0;
   }
 
-
-  void display()
+  //for gamescreen
+  void display1()
   {
     convert(timeLeft);
     pushStyle();
@@ -31,7 +33,7 @@ class Timer
     stroke(155, 0, 0);
     rect(width/25*2+distMeterW*4, height*0.15, distMeterW*4, distMeterW*1.5);
     //for the time
-    textFont(font);
+    textFont(font[0]);
     textSize(75);
     textAlign(CENTER, CENTER);
     fill(250, 0, 0);
@@ -39,6 +41,19 @@ class Timer
     //text(int((timeLeft/1000)/60) + " : " + (timeLeft/1000)%60, width/4, height/10);
     text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.15);
     textSize(12);
+    popStyle();
+  }
+
+  //for endscreen
+  void display2()
+  {
+    convert(timeTaken);
+    pushStyle();
+    textFont(font[1]);
+    textSize(55);
+    textAlign(CENTER, CENTER);
+    fill(250, 250, 0);
+    text(minutes + ":" + seconds, width/2, height*0.7);
     popStyle();
   }
 
@@ -70,6 +85,6 @@ class Timer
     sounds[2].play();
     penalty+=time; //reduce the time when a wrong input is given
     reduceTimeSound = millis(); //record the time when bomb went off
-    bombExploded = true; //to make arduino buzzer sound for 1 sec
+    //bombExploded = true; //to make arduino buzzer sound for 1 sec
   }
 }
