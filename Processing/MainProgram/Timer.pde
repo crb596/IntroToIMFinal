@@ -10,6 +10,7 @@ class Timer
   String seconds;
   int sec;
   int reduceTimeSound;
+  int timeTaken;
 
   Timer(int stime)
   {
@@ -17,10 +18,11 @@ class Timer
     passedTime = 0;
     timerLength = 1000*60*5+1000;
     timeLeft = timerLength/1000;
+    timeTaken = 0;
   }
 
-
-  void display()
+  //for gamescreen
+  void display1()
   {
     convert(timeLeft);
     pushStyle();
@@ -39,6 +41,19 @@ class Timer
     //text(int((timeLeft/1000)/60) + " : " + (timeLeft/1000)%60, width/4, height/10);
     text(minutes + ":" + seconds, width/25*2+distMeterW*4, height*0.15);
     textSize(12);
+    popStyle();
+  }
+
+  //for endscreen
+  void display2()
+  {
+    convert(timeTaken);
+    pushStyle();
+    textFont(font[1]);
+    textSize(55);
+    textAlign(CENTER, CENTER);
+    fill(250, 250, 0);
+    text(minutes + ":" + seconds, width/2, height*0.75);
     popStyle();
   }
 

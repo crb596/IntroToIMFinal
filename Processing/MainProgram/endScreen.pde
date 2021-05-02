@@ -5,7 +5,6 @@ void endScreen()
 
   started = false;
 
-
   if (pass)
     winScreen();
   if (fail)
@@ -21,9 +20,57 @@ void winScreen()
   sounds[2].stop();
   sounds[0].play();
   bombDefused = true;
-  
+
   //loading backgroung image
   image(bgImg[1], 0, 0, width, height);
+
+  //white slate
+  pushStyle();
+  rectMode(CORNERS);
+  fill(0, 0, 0, 150);
+  noStroke();
+  rect(width*0.15, height*.15, width*0.85, height*.85);
+  popStyle();
+
+  pushStyle();
+  imageMode(CORNER);
+  image(endImg[9], width*0.05, width*0.05, width*0.2, width*0.2/4307*5919);
+  popStyle();
+
+  //heading
+  pushStyle();
+  pushMatrix();
+  textFont(font[1]);
+  textAlign(CENTER, CENTER);
+  textSize(62);
+  fill(255, 0, 0);
+  text("Congratulations!", width/2, height*0.23);
+  textSize(30);
+  fill(255);
+  String s1 = "You have successfully been able to diffuse the bomb.\n\nYou are our #1 bomb diffusing team.\n\nKeep up the GOOD WORK!";
+  text(s1, width*0.5, height*0.45);
+  textSize(38);
+  fill(250, 250, 0);
+  String s2 = "TOTAL TIME TAKEN: \n";
+  text(s2, width*0.5, height*0.7);
+  timer.display2();
+  popMatrix();
+  popStyle();
+   
+  //button to restart
+  pushStyle();
+  fill(0, 0, 0, 210);
+  strokeWeight(2);
+  stroke(0);
+  rectMode(CENTER);
+  rect(width/2, height*0.85, width*0.2, height*0.08, 10);
+  //fill(255,0,0);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textFont(font[0]);
+  textSize(24);
+  text("Play Again", width/2, height*0.85);
+  //popStyle();
 }
 
 //===============================================================================================================
@@ -31,10 +78,10 @@ void winScreen()
 void loseScreen()
 {
   bombExploded = true; 
-  
+
   //loading backgroung image
   image(bgImg[0], 0, 0, width, height);
-  
+
   //pushMatrix();
   pushStyle();
   //tint(0,0,0,150);
@@ -85,5 +132,4 @@ void loseScreen()
   popStyle();
 
   //popMatrix();
-
 }

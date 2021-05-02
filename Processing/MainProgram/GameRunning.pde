@@ -636,6 +636,7 @@ class GameStage {
             //Do nothing
           } else if (correctRounds == 4) {
             pass = true;
+            timer.timeTaken = timer.timerLength - timer.timeLeft;
             sounds[0].stop();
             sounds[1].stop();
             sounds[2].stop();
@@ -668,6 +669,7 @@ class GameStage {
             //Do nothing
           } else if (correctRounds == 4) {
             pass = true;
+            timer.timeTaken = timer.timerLength - timer.timeLeft;
             sounds[0].stop();
             sounds[1].stop();
             sounds[2].stop();
@@ -700,6 +702,7 @@ class GameStage {
             //Do nothing
           } else if (correctRounds == 4) {
             pass = true;
+            timer.timeTaken = timer.timerLength - timer.timeLeft;
             sounds[0].stop();
             sounds[1].stop();
             sounds[2].stop();
@@ -732,6 +735,7 @@ class GameStage {
             //Do nothing, runs stage 4 again with last wire
           } else if (correctRounds == 4) {
             pass = true;
+            timer.timeTaken = timer.timerLength - timer.timeLeft;
             sounds[0].stop();
             sounds[1].stop();
             sounds[2].stop();
